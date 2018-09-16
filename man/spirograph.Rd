@@ -5,9 +5,13 @@
 \title{Make coordinates for spirograph}
 \usage{
 spirograph(fixed_radius = 3, cycling_radius = 1,
-  pen_radius = cycling_radius, origin_x = 0, origin_y = 0,
-  windings = cycling_radius, rotation = 0, start_angle = 0,
-  npoints = round(abs(1000 * windings), 0), ngroups = 1)
+  pen_radius = cycling_radius, windings = cycling_radius,
+  color_groups = 1, colors = (scales::viridis_pal())(color_groups),
+  transparency = 1, color_cycles = 1, origin_x = 0, origin_y = 0,
+  rotation = 0, start_angle = 0, points_per_polygon = round(abs(1000
+  * windings), 0), rule = "evenodd", openfile = TRUE,
+  aspect_ratio = 1, end_at_beginning = F, savefile = TRUE,
+  filename = "spiro.svg")
 }
 \arguments{
 \item{fixed_radius}{The radius of the fixed circle being cycled around. Can be positive or negative.}
@@ -16,19 +20,37 @@ spirograph(fixed_radius = 3, cycling_radius = 1,
 
 \item{pen_radius}{The pen placement inside the moving circle cycling around the fixed circle. Can be positive or negative.}
 
+\item{windings}{The number of times the the moving circle winds around the fixed circle.}
+
+\item{color_groups}{= Number of groups in group_id variable}
+
+\item{colors}{Vector of colors for groups. Defaults to viridis scale.}
+
+\item{transparency}{Transparency of fills. Ranges from 0 to 1. Defaults to 1.}
+
+\item{color_cycles}{The number of times the color vector  is recycled}
+
 \item{origin_x}{The x coordinate of the center of the fixed circle}
 
 \item{origin_y}{The y coordinate of the center of the fixed circle}
-
-\item{windings}{The number of times the the moving circle winds around the fixed circle.}
 
 \item{rotation}{The number of radians by which the entire figure should be rotated around the origin of the fixed circle}
 
 \item{start_angle}{The number of radians on the fixed circle's arc where the moving circle starts cycling.}
 
-\item{npoints}{= The number of points to generate}
+\item{points_per_polygon}{= The number of points for each color grouping}
 
-\item{ngroups}{= Number of groups in group_id variable}
+\item{rule}{Character value specifying the path fill mode: either "evenodd" or "winding". Defaults to "evenodd"}
+
+\item{openfile}{Open file in default program for .svg format. Defaults to TRUE.}
+
+\item{aspect_ratio}{Aspect ratio of the image. Defaults to 1.}
+
+\item{end_at_beginning}{Adds the first point to the end of the figure but with the colors of the last color group. Defaults to FALSE.}
+
+\item{savefile}{Save a file. Defaults to TRUE.}
+
+\item{filename}{Name of the output file. Defaults to "spiro.svg"}
 }
 \value{
 A tibble with x and y coordinates of the spirograph, row id, and group id
