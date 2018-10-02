@@ -1,7 +1,7 @@
-Package: spirographer
+Package: spiro
 Title: Creates spirographs
 Version: 0.0.0.9000
-Authors@R: person("William", "Joel", email = "w.joel.schneider@example.com", role = c("aut", "cre"))
+Authors@R: person("W. Joel", "Schneider", email = "w.joel.schneider@gmail.com", role = c("aut", "cre"))
 Description: This package has functions to create spirographs.
 Depends: R (>= 3.5.0)
 License: CC0
@@ -13,5 +13,14 @@ Imports: scales,
     dplyr,
     pander,
     purrr,
-    tidyr
+    tidyr,
+    ggplot2,
+    xml2,
+    profvis,
+    knitr, 
+    magrittr,
+    glue,
+    stringr
 RoxygenNote: 6.1.0
+Suggests: rmarkdown
+VignetteBuilder: knitr
