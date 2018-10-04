@@ -87,13 +87,9 @@ spiro <- function(
     }
   }
 
-
-
-
-
+  # Add transparency to colors, if needed
   if (!is.na(transparency))
     colors <- scales::alpha(colors, alpha = transparency)
-
 
   # Time parameter
   t <- seq(start_angle,
@@ -128,26 +124,31 @@ spiro <- function(
 
   if (color_groups > 1) {
     # Find where color groups transitions
-    d_transitions <- dplyr::mutate(d,
-                                   transition = (color_id != dplyr::lag(color_id,
-                                                                        default = 1)))
+    d_transitions <- dplyr::mutate(
+      d,
+      transition = color_id != dplyr::lag(color_id, default = 1))
 
     # Insert transition rows
     d_transitions <- dplyr::mutate(
       d_transitions,
-      color_id = dplyr::if_else(transition,
-                                dplyr::lag(color_id, default = 1),
-                                color_id),
+      color_id = dplyr::if_else(
+        transition,
+        dplyr::lag(color_id, default = 1),
+        color_id),
       color_cycle_id = dplyr::if_else(
         transition,
         dplyr::lag(color_cycle_id,
                    default = 1),
         color_cycle_id
       ),
-      id = dplyr::if_else(transition,
-                          dplyr::lag(id, default = 1),
-                          id)
-    )
+      id = dplyr::if_else(
+        transition,
+        dplyr::lag(id, default = 1),
+        id
+        )
+      )
+
+    # Filter
     d_transitions <- dplyr::filter(d_transitions,
                                    transition)
 
@@ -293,9 +294,9 @@ spiro <- function(
 #' library(spiro)
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     spin_image(rpm = 1)
+#'     image_spin(rpm = 1)
 #' @export
-spin_image <- function(
+image_spin <- function(
   input,
   rpm = 1,
   rotation_point = c(0.5,0.5),
@@ -379,9 +380,9 @@ r = "{dot_size}"'
 #' library(spiro)
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     scale_image(scale = 0.5)
+#'     image_scale(scale = 0.5)
 #' @export
-scale_image <- function(
+image_scale <- function(
   input,
   scale = 1,
   openfile = TRUE,
@@ -422,9 +423,9 @@ scale_image <- function(
 #' library(spiro)
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     shift_image(scale = 0.5)
+#'     image_shift(scale = 0.5)
 #' @export
-shift_image <- function(
+image_shift <- function(
   input,
   x = 0,
   y = 0,
@@ -459,7 +460,7 @@ shift_image <- function(
 
 #' Rotate image.
 #'
-#' `rotate_image`
+#' `image_rotate`
 #' @param input File name of .svg file to input
 #' @param degrees Degrees to rotate image. Default is 90.
 #' @param radians radians to rotate image. If specified, radians will override degrees
@@ -471,9 +472,9 @@ shift_image <- function(
 #' library(spiro)
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     rotate_image(degrees = 90)
+#'     image_rotate(degrees = 90)
 #' @export
-rotate_image <- function(
+image_rotate <- function(
   input,
   degrees = 90,
   radians = NA,
@@ -487,13 +488,15 @@ rotate_image <- function(
 
   if (!is.na(radians)) degrees = radians * 180 / pi
 
+  dg <- rep_len(degrees, length(g1))
+
   for (i in 1:length(g1)) {
     xml2::xml_set_attr(
       x = g1[i],
       attr = "transform",
       value = paste0(
         ifelse(is.na(transforms[i]),"", transforms[i]),
-        " rotate(", degrees, ")"))
+        " rotate(", dg[i], " 360 360)"))
   }
 
   safe_write(x1, output)
@@ -504,6 +507,8 @@ rotate_image <- function(
 #' Merge images
 #' @param input Vector of file names to merge
 #' @param output File name of .svg file to output.
+#' @param copies The number of copies of the input file to make
+#' @param delete_input Delete input file(s)
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE
 #' @return output name
 #' @examples
@@ -512,13 +517,14 @@ rotate_image <- function(
 #' c(spiro(fixed_radius = 3, cycling_radius = 1),
 #'   spiro(fixed_radius = 3, cycling_radius = 1,
 #'         rotation = pi, colors = "firebrick")) %>%
-#'   merge_image(output = "merged.svg")
+#'   image_merge(output = "merged.svg")
 
 #' @export
-merge_image <- function(
+image_merge <- function(
   input,
   output = NA,
   copies = 1,
+  delete_input = FALSE,
   openfile = TRUE) {
 
   if (length(input) * copies < 2 ) stop("The input parameter must be at least 2 files.")
@@ -533,6 +539,12 @@ merge_image <- function(
   output = spiro_name(output)
 
   safe_write(x1[[1]], output)
+
+  # Delete input files
+  if (delete_input) {
+    remove_inputs <- input[!(input %in% output)]
+    file.remove(remove_inputs)
+  }
   if (!("spiro" %in% class(output))) class(output) <- c("spiro",class(output))
   if (openfile) output
 }
@@ -550,7 +562,7 @@ merge_image <- function(
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1)
 #' @export
-animate_image <- function(
+image_animate <- function(
   input,
   attribute = "opacity",
   values = c(0,1,0),
@@ -583,9 +595,9 @@ animate_image <- function(
 #' library(spiro)
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background_color(color = "black")
+#'     add_background(color = "black")
 #' @export
-add_background_color <- function(
+add_background <- function(
   input,
   color = "black",
   rounding = 0,
@@ -645,9 +657,9 @@ add_background_color <- function(
 #' library(spiro)
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background_color(color = "black")
+#'     add_background(color = "black")
 #' @export
-add_background_gradient_radial <- function(
+add_background_gradient <- function(
   input,
   colors = c("white","black"),
   stops = seq(0,1, length.out = length(colors)),
@@ -726,7 +738,7 @@ if (openfile) output
 #' library(spiro)
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background_color(color = "black")
+#'     add_background(color = "black")
 #' @export
 add_lines <- function(
   input,
@@ -740,6 +752,7 @@ add_lines <- function(
   # Set colors to hex
   colors <- scales::alpha(colors)
   if (!is.na(transparency)) colors <- scales::alpha(colors, transparency)
+  colors[is.na(colors)] <- "none"
 
   # Find all paths
   paths <- xml2::xml_find_all(x = x1,"//d1:path")
@@ -756,8 +769,12 @@ add_lines <- function(
     ";",
     styles
   )
-  for (i in 1:npaths) xml2::xml_set_attr(
-    x = paths[i], attr = "style", value = new_styles[i])
+  for (i in 1:npaths) {
+    xml2::xml_set_attr(
+      x = paths[i],
+      attr = "style",
+      value = new_styles[i])
+    }
 
   safe_write(x1, output)
 
@@ -777,7 +794,7 @@ add_lines <- function(
 #' library(spiro)
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background_color(color = "black")
+#'     add_background(color = "black")
 #' @export
 add_fills <- function(
   input,
@@ -798,6 +815,7 @@ add_fills <- function(
   # Set colors to hex
   colors <- scales::alpha(colors)
   if (!is.na(transparency)) colors <- scales::alpha(colors, transparency)
+  colors[is.na(colors)] <- "none"
 
   # Find all paths
   paths <- xml2::xml_find_all(x = x1,"//d1:path")
@@ -839,9 +857,9 @@ add_fills <- function(
 #' library(spiro)
 #' library(magrittr)
 #' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background_color(color = "black")
+#'     add_background(color = "black")
 #' @export
-animate_pathdot <- function(
+add_pathdot <- function(
   input,
   colors = "red",
   transparency = NA,
@@ -926,7 +944,7 @@ knit_print.spiro = function(file, ...) {
 #'  lwd = 5,
 #'  ljoin = 1
 #'  ) %>%
-#'    add_background_color(color = "#108998")
+#'    add_background(color = "#108998")
 #' @export
 string_bezier <- function(
   file = "bezier.svg",

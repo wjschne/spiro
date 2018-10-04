@@ -48,5 +48,5 @@ string_bezier(
  lwd = 5,
  ljoin = 1
  ) \%>\%
-   add_background_color(color = "#108998")
+   add_background(color = "#108998")
 }

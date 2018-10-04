@@ -28,5 +28,5 @@ Add fills to lines
 library(spiro)
 library(magrittr)
 spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
-    add_background_color(color = "black")
+    add_background(color = "black")
 }
