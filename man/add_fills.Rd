@@ -14,12 +14,12 @@ add_fills(input, colors = "black", transparency = NA,
 
 \item{transparency}{Transparency of colors. Ranges from 0 to 1. Default is NA (i.e., leave the colors as specified in the colors argument).}
 
+\item{rule}{Character value specifying the path fill mode: either "evenodd" or "winding". Defaults to "evenodd"}
+
 \item{openfile}{Open file in default program for .svg format. Defaults to FALSE.}
 
 \item{output}{File name of .svg file to output. Default is to overwrite the input file.
 #' @return output name}
-
-\item{line_width}{Width of lines. Default is 0.5.}
 }
 \description{
 Add fills to lines

@@ -1,0 +1,35 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# spiro
+
+The `spiro` package creates spirographs in the .svg file format. There are functions in `spiro` that can can alter and animate your spirographs after they have been created.
+
+## Installation
+
+You can install spiro from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("wjschne/spirographer")
+```
+
+## Example
+
+Here is a basic spirograph.
+
+```{r example}
+library(spiro)
+spiro(fixed_radius = 11, cycling_radius = 4) 
+```

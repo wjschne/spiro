@@ -14,7 +14,7 @@ image_animate(input, attribute = "opacity", values = c(0, 1, 0),
 
 \item{values}{Vector of values to go between. Defaults to c(0,1,0)}
 
-\item{duration}{Number of seconds for animation to last, defauts to 10 seconds}
+\item{duration}{Number of seconds for animation to last, defaults to 10 seconds}
 
 \item{openfile}{Open file in default program for .svg format. Defaults to FALSE.}
 

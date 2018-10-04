@@ -11,8 +11,9 @@ image_shift(input, x = 0, y = 0, openfile = TRUE, output = input)
 
 \item{x}{Shift x. Can be positive or negative.}
 
-\item{y}{Shift y. Can be positive or negative.
-#' @param openfile Open file in default program for .svg format. Defaults to FALSE.}
+\item{y}{Shift y. Can be positive or negative.}
+
+\item{openfile}{Open file in default program for .svg format. Defaults to FALSE.}
 
 \item{output}{File name of .svg file to output. Default is to overwrite the input file.}
 }
@@ -25,6 +26,7 @@ shift image
 \examples{
 library(spiro)
 library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
-    image_shift(scale = 0.5)
+spiro(fixed_radius = 3,
+      cycling_radius = 1) \%>\%
+  image_shift(x = 200, y = 200)
 }

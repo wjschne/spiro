@@ -417,13 +417,14 @@ image_scale <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @param x Shift x. Can be positive or negative.
 #' @param y Shift y. Can be positive or negative.
-#' #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
+#' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
 #' library(spiro)
 #' library(magrittr)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     image_shift(scale = 0.5)
+#' spiro(fixed_radius = 3,
+#'       cycling_radius = 1) %>%
+#'   image_shift(x = 200, y = 200)
 #' @export
 image_shift <- function(
   input,
@@ -554,7 +555,7 @@ image_merge <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @param attribute Name of attribute. opacity is the default
 #' @param values Vector of values to go between. Defaults to c(0,1,0)
-#' @param duration Number of seconds for animation to last, defauts to 10 seconds
+#' @param duration Number of seconds for animation to last, defaults to 10 seconds
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
@@ -786,7 +787,7 @@ add_lines <- function(
 #' @param input File name of .svg file to input
 #' @param colors Vector of background color
 #' @param transparency Transparency of colors. Ranges from 0 to 1. Default is NA (i.e., leave the colors as specified in the colors argument).
-#' @param line_width Width of lines. Default is 0.5.
+#' @param rule Character value specifying the path fill mode: either "evenodd" or "winding". Defaults to "evenodd"
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' #' @return output name

@@ -2,7 +2,7 @@
 title: "A Guide to Using the `spiro` Package"
 author: "W. Joel Schneider"
 date: "`r Sys.Date()`"
-output: 
+output:
   rmarkdown::html_vignette:
     css: VignetteStyle.css
 vignette: >
@@ -53,8 +53,8 @@ Enter the `spiro` package. It can do traditional spirographs like this one:
 
 ```{r simple_spiro}
 library(spiro)
-library(pander)
 library(magrittr)
+
 spiro(
   fixed_radius = 7,
   cycling_radius = 6,
@@ -104,17 +104,21 @@ spiro(
 
 ```{r purple_midnight}
 spiro(
+  file = "purple_midnight.svg",
   fixed_radius = 800,
   cycling_radius = 751,
   pen_radius = 40,
   color_groups = 4,
   color_cycles = 2,
   points_per_polygon = 20000,
-  colors = c("midnightblue", "white", "purple4", "white"),
-  file = "purple_midnight.svg"
-) %>%
-  add_lines(colors = c("black"),
-            line_width = 0.15) %>%
+  colors = c(
+    "midnightblue", 
+    "white", 
+    "purple4", 
+    "white")) %>%
+  add_lines(
+    colors = "black",
+    line_width = 0.15) %>%
   add_background_gradient(
     colors = c("black",
                "purple4", 
@@ -159,6 +163,7 @@ pen_radii <- seq(3.8, 1.5, length.out = k)
 alphas <- rep_len(c(0.85, rep(0.2, 4)), k)
 colors <- rep_len(scico::scico(6, palette = "devon"), k) %>% 
            scales::alpha(alpha = alphas) 
+
 tibble::tibble(
   file = files,
   pen_radius = pen_radii,
@@ -171,20 +176,22 @@ tibble::tibble(
     points_per_polygon = 500,
     draw_fills = T,
     xlim = c(-7, 7),
-    ylim = c(-7, 7)
-  ) %>%
-  image_merge(output = "spiralstar.svg", 
-              delete_input = TRUE) %>%
+    ylim = c(-7, 7)) %>%
+  image_merge(
+    output = "spiralstar.svg", 
+    delete_input = TRUE) %>%
   add_lines(colors = c(rep(NA,k - 1), "gray")) %>% 
   image_rotate(degrees = (1:k / 2.5)) %>% 
   add_background_gradient(
-    colors = c("#FFFFFF","#26588E", "#E5E3F9","#283568", "#C8C3F3"),
+    colors = c(
+      "#FFFFFF",
+      "#26588E", 
+      "#E5E3F9",
+      "#283568",
+      "#C8C3F3"),
     radius = 1, 
     rounding = 1, 
-    stops = c(0.42,0.93,0.96,0.97,1) 
-    )
-
-
+    stops = c(0.42,0.93,0.96,0.97,1))
 ```
 
 ```{r, echo = F, fig.width=7, fig.height=7, out.height=700, out.width=700}
@@ -206,13 +213,12 @@ The primary function of the `spiro` package is the the `spiro` function. By defa
 
 The basic parameters to play with on a spirograph are the radius of the fixed circle, the radius of the moving circle, and the pen placement radius inside the moving circle. To make the spirograph from the animation, the radius of the fixed circle is 3, the radius of the cycling circle is 1, and the radius of the pen placement is 2. Technically, this is a *hypotrochoid* because the moving circle is inside the fixed circle. 
 
-```{r}
+```{r hypotrochoid}
 spiro(
   fixed_radius = 3,
   cycling_radius = 1,
   pen_radius = 2,
-  file = "hypotrochoid.svg"
-)
+  file = "hypotrochoid.svg")
 ```
 
 An *epitrochoid* is made with the moving circle outside the fixed circle.
@@ -223,45 +229,42 @@ knitr::include_graphics("negativeradius.gif")
 
 To make an *epitrochoid*, set the `cycling_radius` parameter to a negative value:
 
-```{r}
+```{r epitrochoid}
 spiro(
   fixed_radius = 3,
   cycling_radius = -1,
   pen_radius = 2,
-  file = "epitrochoid.svg"
-)
+  file = "epitrochoid.svg")
 ```
 
 ## Fills vs. Lines
 
 If you want just lines instead of fills, set `draw_fills` to FALSE:
 
-```{r}
+```{r epitrochoid_lines}
 spiro(
   fixed_radius = 3,
   cycling_radius = -1,
   pen_radius = 2,
   draw_fills = FALSE,
-  file = "epitrochoid_lines.svg"
-)
+  file = "epitrochoid_lines.svg")
 ```
 
 If you want lines and fills together, draw a filled spirograph, and then color the lines with the `add_lines` function. 
 
 Because the spiro function outputs the name of the file it creates and the first parameter of the `add_lines` function is the name of the input file, it is possible to to use the `add_lines` function with a pipe function (`%>%`) workflow.
 
-```{r}
+```{r epitrochoid_add_lines}
 spiro(
   fixed_radius = 3,
   cycling_radius = -1,
   pen_radius = 2,
   file = "epitrochoid_add_lines.svg"
-) %>%
-  add_lines(colors = "black", line_width = 4)
+  ) %>%
+  add_lines(
+    colors = "black",
+    line_width = 4)
 ```
-
-
-
 
 # Using Color
 
@@ -269,43 +272,39 @@ spiro(
 
 The figure can be split into multiple parts. Setting the `color_groups` parameter to 2, splits the figure in half:
 
-```{r}
+```{r six_points}
 spiro(
   fixed_radius = 6,
   cycling_radius = 5,
   pen_radius = 5,
   color_groups = 2,
-  file = "six_points.svg"
-)
+  file = "six_points.svg")
 ```
 
 ## Color Palettes
 
 By default, the colors are selected from the viridis pallete via the `scales` package. If you want to select different colors, you can do so directly with a vector of colors:
 
-```{r}
+```{r six_points_blueblack}
 spiro(
   fixed_radius = 6,
   cycling_radius = 5,
   pen_radius = 5,
   color_groups = 2,
   colors = c("blue", "black"),
-  file = "six_points_blueblack.svg"
-)
+  file = "six_points_blueblack.svg")
 ```
 
 You can use any color palette as well. Here we use the rainbow palette:
 
-```{r}
+```{r six_points_rainbow}
 spiro(
   fixed_radius = 6,
   cycling_radius = 5,
   pen_radius = 5,
   color_groups = 12,
   colors = rainbow(12),
-  file = "six_points_rainbow.svg"
-)
-
+  file = "six_points_rainbow.svg")
 ```
 
 A great list of color palettes and functions can be found in Emil Hvitfeldt's [paletteer](https://github.com/EmilHvitfeldt/paletteer#included-packages) package.
@@ -317,7 +316,7 @@ Imagine that an image has 30 points and 5 colors. This means that there are 5 gr
 You can recycle the colors as many times as you wish. Here are 12 colors recycled 3 times (i.e., `color_cycles` = 3). Thus, there are 3&nbsp;&times;&nbsp;12&nbsp;=&nbsp;36 segments in this spirograph.
 
 
-```{r}
+```{r six_points_rainbow_3}
 spiro(
   fixed_radius = 6,
   cycling_radius = 5,
@@ -325,14 +324,12 @@ spiro(
   color_groups = 12,
   colors = rainbow(12),
   color_cycles = 3,
-  file = "six_points_rainbow_3.svg"
-)
-
+  file = "six_points_rainbow_3.svg")
 ```
 
 Recycling colors can dramatically change the look of the figure. Here is a single cycle of 5 colors:
 
-```{r}
+```{r blurry_checkers}
 spiro(
   fixed_radius = 121,
   cycling_radius = 100,
@@ -342,14 +339,13 @@ spiro(
   points_per_polygon = 1000,
   transparency = .5,
   file = "blurry_checkers.svg"
-) %>%
+  ) %>%
   add_background(color = "black")
-
 ```
 
 Here is the spirograph with the same 5 colors recycled 200 times:
 
-```{r}
+```{r blurry_circles}
 spiro(
   fixed_radius = 121,
   cycling_radius = 100,
@@ -359,7 +355,7 @@ spiro(
   points_per_polygon = 50,
   transparency = 0.5,
   file = "blurry_circles.svg"
-) %>%
+  ) %>%
   add_background(color = "black") 
 ```
 
@@ -371,13 +367,12 @@ Notice that the `points_per_polygon` was set to a lower value in the example abo
 
 You can set the background using the pipe (`%>%`) operator and the `add_background`
 
-```{r}
+```{r rainbowspikes}
 
 rainbow_colors <- hsv(
     h = seq(1 / 16, 1, length.out = 16),
     s = 0.7,
-    v = 0.7
-  )
+    v = 0.7)
 
 spiro(
   fixed_radius = 16,
@@ -388,15 +383,15 @@ spiro(
   color_cycles = 2,
   points_per_polygon = 100,
   colors = rainbow_colors
-) %>%
+  ) %>%
   add_background(color = "gray80")
 ```
 
 ## Rounded Corners
 
-You can round the corners if you wish. Rounding ranges from 0 to 1, with 0 being a square and 1 being a circle.
+You can round the corners if you wish. Rounding ranges from 0 to 1, with 0 being a square and 1 being a circle. Here the corners are set so that 10% of each side is rounded.
 
-```{r}
+```{r rainbowspikes_rounded}
 spiro(
   fixed_radius = 16,
   cycling_radius = 5,
@@ -406,7 +401,7 @@ spiro(
   color_cycles = 2,
   points_per_polygon = 100,
   colors = rainbow_colors
-) %>%
+  ) %>%
   add_background(color = "gray80", rounding = 0.1)
 ```
 
@@ -415,15 +410,15 @@ spiro(
 If you want a radial gradient background, use the `add_background_gradient` function. You can set the colors and the stops. If you do not set the stops manually, they will be evenly spaced from 0 to 1.
 
 
-```{r}
+```{r blue_gem}
 spiro(
   fixed_radius = 21,
   cycling_radius = -20,
   pen_radius = 35,
   transparency = 1,
   colors = "black",
-  file = "asdf.svg"
-) %>%
+  file = "blue_gem.svg"
+  ) %>%
   add_lines(colors = "white") %>%
   add_background_gradient(
     colors = c(
@@ -435,7 +430,7 @@ spiro(
 
 Here is an example of manually setting gradient stops:
 
-```{r}
+```{r rainbowspikesdonut}
 spiro(
   fixed_radius = 16,
   cycling_radius = 5,
@@ -446,13 +441,12 @@ spiro(
   points_per_polygon = 100,
   colors = rainbow_colors,
   transparency = 0.7
-) %>%
+  ) %>%
   add_background_gradient(
     colors = c("white", "black", "black", "white"),
     stops = c(.27, .34, .93, 1), 
     rounding = 1, 
-    radius = 1
-  )
+    radius = 1)
 ```
 
 In the above image, the rounding was set to 1 to make a circular background. The radius was set to 1 so that the gradient would extend to the edge of the circle. The default radius of $\sqrt{2}$ extends to the corner of a square background.
@@ -466,8 +460,7 @@ spiro(
   fixed_radius = 3,
   cycling_radius = 1,
   colors = "royalblue",
-  file = "spiroblue.svg"
-) 
+  file = "deltoid_blue.svg") 
 ```
 
 Now let's make the same image but rotated 60 degrees and in a different color:
@@ -478,52 +471,73 @@ spiro(
   cycling_radius = 1,
   rotation = 60 / 180 * pi,
   colors = "firebrick",
-  file = "spirored.svg"
-) 
+  file = "deltoid_red.svg") 
 ```
 
 Now let's merge the images:
 
-```{r}
+```{r deltoid_merge}
 image_merge(
-  input = c("spiroblue.svg", "spirored.svg"),
+  input = c("deltoid_blue.svg", "deltoid_red.svg"),
   output = "redblue.svg") 
 ```
 
-It is possible to merge more than two images:
+It is possible to merge more than two images. In this example, six images are created as a vector. If we leave the file name unspecified, the spiro function will generate a unique file name for each image. These individual files will be deleted because we have set the `delete_input` parameter to `TRUE` in the `image_merge` function.
 
-```{r}
-c(
+```{r dodgerblue_snowflake}
+c(spiro(
+    fixed_radius = 17,
+    cycling_radius = 3,
+    colors = "dodgerblue4"),
   spiro(
-    fixed_radius = 3,
-    cycling_radius = 1,
-    colors = "royalblue",
-    transparency = 0.5,
-    file = "s1.svg"
-  ),
+    fixed_radius = 17,
+    cycling_radius = 4, 
+    colors = "white"),
   spiro(
-    fixed_radius = 3,
-    cycling_radius = 1,
-    colors = "firebrick",
-    transparency = 0.5,
-    rotation = 2 * pi / 9,
-    file = "s2.svg"
-  ),
+    fixed_radius = 17,
+    cycling_radius = 5,
+    colors = "dodgerblue3"),
   spiro(
-    fixed_radius = 3,
-    cycling_radius = 1,
-    colors = "darkorchid",
-    transparency = 0.5,
-    rotation =  4 * pi / 9,
-    file = "s3.svg"
-  )
-) %>%
-  image_merge(output = "merged_s123.svg") 
+    fixed_radius = 17,
+    cycling_radius = 6,
+    colors = "white"),
+  spiro(
+    fixed_radius = 17,
+    cycling_radius = 7,
+    colors = "dodgerblue2"),
+  spiro(
+    fixed_radius = 17,
+    cycling_radius = 8,
+    colors = "white")) %>%
+  image_merge(
+    output = "dodgerblue_snowflake.svg", 
+    delete_input = TRUE)
+```
+
+This kind of image might be created more efficiently by specifying a tibble with the parameters we want to vary. Then we pipe the tibble into the `pmap` function from the `purrr` package,  which will apply the `spiro` function to each row in the tibble. We use the `pmap_chr` variant of `pmap` because we want to be sure that the output is a vector of file names (i.e., in the "character" format). 
+
+The spirograph produced by the code below is the same as above, and thus the image is not duplicated.
+
+```{r, eval = FALSE}
+tibble(
+  fixed_radius = 17,
+  cycling_radius = 3:8,
+  colors = c(
+    "dodgerblue4", "white",
+    "dodgerblue3", "white",
+    "dodgerblue2", "white")
+  ) %>% 
+  pmap_chr(spiro) %>%
+  image_merge(
+    output = "dodgeblue_snowflake.svg", 
+    delete_input = TRUE) 
 ```
 
 # Transforming images
 
 ## Re-scaling Images
+
+By default, the `spiro` function makes the image as large as possible by setting the plot limits to the most extreme point (i.e., the point with the largest *r* in polar coordinates. For example, if the most extreme point is 6 units from the center (i.e, )
 
 You can change the size of the image with the `image_scale` function. 
 
@@ -534,7 +548,7 @@ spiro(
   pen_radius = 3,
   colors = "darkorchid",
   file = "heptagon_petals.svg"
-) %>%
+  ) %>%
   image_scale(scale = 0.4) 
 ```
 
@@ -557,48 +571,36 @@ c(
     file = "heptagon_petals_white.svg"
   ) %>%
     image_scale(scale = 0.4)
-) %>%
+  ) %>%
   image_merge(output = "heptagon_petals_merged.svg")
-
-  
 ```
 
 
 ```{r}
-hsv_v <- rep(c(1.1,0),10)  + rep(c(-1,1),10) * seq(0.3,0.8,length.out = 20)
+hsv_s <- rep(c(1.1,0),10)  + rep(c(-1,1),10) * seq(0.3,0.8,length.out = 20)
 
-spiro(fixed_radius = 6,
-      cycling_radius = -1,
-      pen_radius = 1,
-      file = "aster.svg",
-      rotation = pi / 6,
-      points_per_polygon = 500) %>%
-  image_merge(output = "olso_aster.svg", copies = 20) %>%
-  add_fills(colors = hsv(seq(0,.95,0.05), v = rep(c(0.5,1),10),
-                         s = hsv_v)) %>%
+spiro(
+  fixed_radius = 6,
+  cycling_radius = -1,
+  pen_radius = 1,
+  file = "aster.svg",
+  rotation = pi / 6,
+  points_per_polygon = 500
+  ) %>%
+  image_merge(
+    output = "hsv_stripes.svg", 
+    copies = 20
+    ) %>%
+  add_fills(
+    colors = hsv(
+      h = seq(0,.95,0.05), 
+      v = rep(c(0.5,1),10),
+      s = hsv_s)
+    ) %>%
   image_scale(scale = seq(1, 0, length.out = 21)[-21]) %>% 
-  add_background()
+  add_background(rounding = 1)
 ```
 
-
-
-```{r}
-n <- 10
-oslo_colors <- scico::scico(
-  n = n,
-  palette = "oslo",
-  alpha = 0.9) %>% 
-  rev()
-
-spiro(file = "olso_aster.svg",
-      rotation = pi / 6,
-      points_per_polygon = 100) %>%
-  image_merge(output = "olso_aster.svg", copies = n) %>%
-  add_fills(colors = oslo_colors) %>%
-  image_scale(scale = sqrt(0.75 ^ (seq(0, n - 1)))) %>%
-  image_spin(rpm = 1:n + 1) %>%
-  add_background(color = "black", rounding = 1)
-```
 
 
 
@@ -650,7 +652,7 @@ spiro(file = "rainbowsequence.svg", xlim = c(-15,15), ylim = c(-15,15)) %>%
 
 
 
-# Animate Your Spirographs
+# Animating Spirographs
 
 Unfortunately, the animations produced with the `spiro` package are not viewable by all programs that display svg files. These animations work with the Google Chrome browser. They may work, with varying degrees of smoothness in other browsers (e.g., Mozilla Firefox). They do not work in Microsoft Edge or Microsoft Internet Explorer.
 
@@ -744,7 +746,7 @@ spiro(
 
 We can merge and spin these images in a streamlined workflow. By default, the output of the spiro function is the file name. Thus, we can use the pipe operator `%>%` from the `magrittr` package to string commands together.  If we merge the images first, the rotations can be specified with a vector.
 
-```{r}
+```{r purple_cycle}
 c(
   spiro(
     colors = "purple",
@@ -769,6 +771,30 @@ c(
   image_spin(rpm = c(0.5,-0.5)) %>%
   add_background(color = "black")
 ```
+
+
+
+
+```{r oslo_aster}
+n <- 10
+oslo_colors <- scico::scico(
+  n = n,
+  palette = "oslo",
+  alpha = 0.9) %>% 
+  rev()
+
+spiro(
+  file = "olso_aster.svg",
+  rotation = pi / 6,
+  points_per_polygon = 100
+  ) %>%
+  image_merge(output = "oslo_aster.svg", copies = n) %>%
+  add_fills(colors = oslo_colors) %>%
+  image_scale(scale = sqrt(0.75 ^ (seq(0, n - 1)))) %>%
+  image_spin(rpm = 1:n + 1) %>%
+  add_background(color = "black", rounding = 1)
+```
+
 
 ### Off-Center Rotations
 
@@ -882,3 +908,15 @@ d %>%
   coord_equal()
 
 ```
+
+
+
+```{r}
+library(bsplus)
+bs_carousel(id = "spiro") %>%
+  bs_append(content = bs_carousel_image(src = "aster.svg")) %>%
+  bs_append(content = bs_carousel_image(src = "blue_gem.svg")) %>%
+  bs_append(content = bs_carousel_image(src = "cork.svg")) %>%
+  bs_append(content = bs_carousel_image(src = "purple_cycle.svg"))
+```
+
