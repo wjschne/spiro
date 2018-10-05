@@ -1,10 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# spiro
+# spiro <img src="man/figures/logo.svg" align="right" height=140/>
 
 The `spiro` package creates spirographs in the .svg file format. There
-are functions in `spiro` that can can alter and animate your spirographs
+are functions in `spiro` that transform and animate your spirographs
 after they have been created.
 
 ## Installation
@@ -22,7 +22,11 @@ Here is a basic spirograph.
 
 ``` r
 library(spiro)
-spiro(fixed_radius = 11, cycling_radius = 4) 
+spiro(
+  fixed_radius = 11, 
+  cycling_radius = 4, 
+  pen_radius = 9, 
+  file = "example.svg") 
 ```
 
-![](spiro020.svg)<!-- -->
+![](example.svg)<!-- -->

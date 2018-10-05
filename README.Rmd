@@ -12,9 +12,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# spiro
+# spiro <img src="man/figures/logo.svg" align="right" height=140/>
 
-The `spiro` package creates spirographs in the .svg file format. There are functions in `spiro` that can can alter and animate your spirographs after they have been created.
+The `spiro` package creates spirographs in the .svg file format. There are functions in `spiro` that transform and animate your spirographs after they have been created.
 
 ## Installation
 
@@ -31,5 +31,9 @@ Here is a basic spirograph.
 
 ```{r example}
 library(spiro)
-spiro(fixed_radius = 11, cycling_radius = 4) 
+spiro(
+  fixed_radius = 11, 
+  cycling_radius = 4, 
+  pen_radius = 9, 
+  file = "example.svg") 
 ```

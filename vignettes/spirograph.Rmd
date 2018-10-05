@@ -44,9 +44,10 @@ As a kid, I *loved* spirographs. I still do. Making them feels more like discove
 
 Software to make digital spirographs is not hard to find, but I had several reasons to make my own spirograph generator using R:
 
+* It was a fun challenge.
 * To make the output in the .svg format so that the image quality is crisp at any size. 
-* To be able to play with both lines and polygon fills. 
-* To be able to recycle colors as the pen moves along the spiro.
+* To be able to play with both lines and polygon fills, recycling colors as the pen moves along the spirograph.
+* To automate complex merging of spirographs
 * To animate .svg images
 
 Enter the `spiro` package. It can do traditional spirographs like this one:
@@ -198,6 +199,29 @@ tibble::tibble(
 knitr::include_graphics("spiralstar.svg")
 ```
 
+```{r oslo_aster, eval = FALSE}
+n <- 10
+oslo_colors <- scico::scico(
+  n = n,
+  palette = "oslo",
+  alpha = 0.9) %>% 
+  rev()
+
+spiro(
+  file = "olso_aster.svg",
+  rotation = pi / 6,
+  points_per_polygon = 100
+  ) %>%
+  image_merge(output = "oslo_aster.svg", copies = n) %>%
+  add_fills(colors = oslo_colors) %>%
+  image_scale(scale = sqrt(0.75 ^ (seq(0, n - 1)))) %>%
+  image_spin(rpm = 1:n + 1) %>%
+  add_background(color = "black", rounding = 1)
+```
+
+```{r, echo = F, fig.width=7, fig.height=7, out.height=700, out.width=700}
+knitr::include_graphics("oslo_aster.svg")
+```
 
 # What is a Spirograph?
 
@@ -250,7 +274,7 @@ spiro(
   file = "epitrochoid_lines.svg")
 ```
 
-If you want lines and fills together, draw a filled spirograph, and then color the lines with the `add_lines` function. 
+If you want lines and fills together, draw a filled spirograph, and then color the lines with the `add_lines` function.
 
 Because the spiro function outputs the name of the file it creates and the first parameter of the `add_lines` function is the name of the input file, it is possible to to use the `add_lines` function with a pipe function (`%>%`) workflow.
 
@@ -311,10 +335,9 @@ A great list of color palettes and functions can be found in Emil Hvitfeldt's [p
 
 ## Color Recycling
 
-Imagine that an image has 30 points and 5 colors. This means that there are 5 groups of 6 points to make 6-sided polygons (or lines). If you set the `color_cycles` parameter to 2, `spiro` will cycle through the 5 colors twice. Thus, there will be 10 groups of 3 points each to create polygons (lines). There will be 2 polygons of each color.
+Imagine that an image has 30 points and 5 colors. This means that there are 5 groups of 6 points to make 6-sided polygons (or lines). If you set the `color_cycles` parameter to 2, `spiro` will cycle through the 5 colors twice. Thus, there will be 10 groups of 3 points each to create polygons (or lines). There will be 2 polygons of each color.
 
 You can recycle the colors as many times as you wish. Here are 12 colors recycled 3 times (i.e., `color_cycles` = 3). Thus, there are 3&nbsp;&times;&nbsp;12&nbsp;=&nbsp;36 segments in this spirograph.
-
 
 ```{r six_points_rainbow_3}
 spiro(
@@ -514,11 +537,12 @@ c(spiro(
     delete_input = TRUE)
 ```
 
-This kind of image might be created more efficiently by specifying a tibble with the parameters we want to vary. Then we pipe the tibble into the `pmap` function from the `purrr` package,  which will apply the `spiro` function to each row in the tibble. We use the `pmap_chr` variant of `pmap` because we want to be sure that the output is a vector of file names (i.e., in the "character" format). 
+This kind of multi-layer spirograph can be created more efficiently by specifying a tibble with the parameters we want to vary. Then we pipe the tibble into the `pmap` function from the `purrr` package,  which will apply the `spiro` function to each row in the tibble. We use the `pmap_chr` variant of `pmap` because we want to be sure that the output is a vector of file names (i.e., in the "character" format). 
 
 The spirograph produced by the code below is the same as above, and thus the image is not duplicated.
 
 ```{r, eval = FALSE}
+library(purrr)
 tibble(
   fixed_radius = 17,
   cycling_radius = 3:8,
@@ -537,11 +561,11 @@ tibble(
 
 ## Re-scaling Images
 
-By default, the `spiro` function makes the image as large as possible by setting the plot limits to the most extreme point (i.e., the point with the largest *r* in polar coordinates. For example, if the most extreme point is 6 units from the center (i.e, )
+By default, the `spiro` function makes the image as large as possible by setting the plot limits to the most extreme point (i.e., the point with the largest *r* in polar coordinates. For example, if the most extreme point is 6 units from the center, the limits of the x and y axes will be &pm;6. One way to change the size of the spirograph is to set the limits manually with the `xlim` and `ylim` parameters. Doing so often involves trial-and-error to obtain the desired results.
 
-You can change the size of the image with the `image_scale` function. 
+An alternative is to change the size of the image with the `image_scale` function. This function does not alter the underlying data but transforms the .svg image directly.
 
-```{r}
+```{r heptagon_petals}
 spiro(
   fixed_radius = 7,
   cycling_radius = 1,
@@ -554,37 +578,41 @@ spiro(
 
 This function is useful when  you wish to merge images of different sizes.
 
-```{r}
+```{r seven_loops}
 c(
   spiro(
     fixed_radius = 7,
     cycling_radius = -1,
     pen_radius = 3,
     colors = "darkorchid",
-    file = "seven_loops.svg"
   ),
   spiro(
     fixed_radius = 7,
     cycling_radius = 1,
     pen_radius = 3,
     colors = "white",
-    file = "heptagon_petals_white.svg"
-  ) %>%
+    ) %>%
     image_scale(scale = 0.4)
   ) %>%
-  image_merge(output = "heptagon_petals_merged.svg")
+  image_merge(
+    output = "heptagon_petals_merged.svg", 
+    delete_input = TRUE)
 ```
 
+## Rotating Images
 
-```{r}
-hsv_s <- rep(c(1.1,0),10)  + rep(c(-1,1),10) * seq(0.3,0.8,length.out = 20)
+The `spiro` function has a `rotation` parameter that determines the rotation of the image and alters the data points directly. However, sometimes you want to rotate the image after it has been created. The `image_rotate` function inserts a transform rotate statement into the .svg file. All transforms (i.e., shifting, rotating, and rescaling) are cumulative in .svg, and thus the order in which they are performed will produce different results.
+
+You can specify the rotation in the `degrees` parameter by default, but if you specify the rotation in the `radians`, any values in the `degrees` parameter will be ignored.
+
+```{r hsv_stripes}
+hsv_s <- rep(c(1,0),10)  + rep(c(-1,1),10) * seq(0.3,0.8,length.out = 20)
 
 spiro(
   fixed_radius = 6,
   cycling_radius = -1,
   pen_radius = 1,
-  file = "aster.svg",
-  rotation = pi / 6,
+   rotation = pi / 6,
   points_per_polygon = 500
   ) %>%
   image_merge(
@@ -593,132 +621,41 @@ spiro(
     ) %>%
   add_fills(
     colors = hsv(
-      h = seq(0,.95,0.05), 
-      v = rep(c(0.5,1),10),
+      h = rep(seq(0,.90,0.1), 2), 
+      v = rep(c(0.4,.7),10),
       s = hsv_s)
     ) %>%
   image_scale(scale = seq(1, 0, length.out = 21)[-21]) %>% 
+  image_rotate(degrees = 0:19 * 5) %>% 
   add_background(rounding = 1)
 ```
 
+## Shifting Images
 
+In this example, we create 6 copies of a spirograph, give each copy a different color, shift the x-coordinates, and then rotate them.
 
-
-```{r}
-n <- 10
-spiro(
-  fixed_radius = 6,
-  cycling_radius =   11,
-  pen_radius =   -6 ,
-  colors = "white",
-  file = "viridis_web.svg",
-  draw_fills = F,transparency = 0.9,
-  line_width = 1,
-  rotation = pi / 6,
-  points_per_polygon = 1000
-) %>%
-  image_merge(
-    output = "viridis_web.svg", 
-    copies = n
-    ) %>%
-  add_fills(scales::viridis_pal(
-    end = 0.97, 
-    alpha = 0.9)(n)) %>%
-  image_scale(
-    scale = 1.54 * sqrt(0.8 ^ (seq(0, n - 1)))
-    ) %>%
-  image_spin(rpm = 1:n * 0.15) %>%
-  add_background()
-```
-
-
-## Rotating Images
-
-The `spiro` function has a `rotation` parameter that determines the rotation of the image and alters the data points directly. However, sometimes you want to rotate the image after it has been created. The `image_rotate` function inserts a transform rotate statement into the .svg file. All transforms (i.e., shifting, rotating, and rescaling) are cumulative in .svg, and thus the order in which they are performed will produce different results.
-
-```{r}
+```{r rainbowsequence}
 spiro(file = "rainbowsequence.svg", xlim = c(-15,15), ylim = c(-15,15)) %>% 
-  image_merge("rainbowsequence.svg", copies = 6) %>% 
+  image_merge(output = "rainbowsequence.svg", copies = 6) %>% 
   add_fills(colors = rainbow(6)) %>% 
   image_shift(x = 100 * (0:5 - 2.5)) %>% 
   image_rotate(degrees = seq(0,90, length.out = 6))
-
-
 ```
 
 
-
-
-
-
-
 # Animating Spirographs
+
+One of the primary reasons I chose to make
 
 Unfortunately, the animations produced with the `spiro` package are not viewable by all programs that display svg files. These animations work with the Google Chrome browser. They may work, with varying degrees of smoothness in other browsers (e.g., Mozilla Firefox). They do not work in Microsoft Edge or Microsoft Internet Explorer.
 
 ## Spinning Spirographs
 
-Suppose we have a static image we want to spin:
-
-```{r}
-spiro(
-  file = "Static.svg",
-  fixed_radius = pi,
-  cycling_radius = sqrt(8),
-  pen_radius = 0.5 * sqrt(8) / pi ,
-  windings = 81,
-  start_angle = 0,
-  points_per_polygon = 10000
-)
-```
-
-The `image_spin` function takes file name of an svg file created by the `spiro` function and adds an `animateTransform` node to the .svg. To spin clockwise, set the `rpm` parameter to a postive number. 
-
-```{r}
-spiro(
-  file = "SpinRight.svg",
-  fixed_radius = pi,
-  cycling_radius = sqrt(8),
-  pen_radius = 0.5 * sqrt(8) / pi ,
-  windings = 81,
-  start_angle = 0,
-  points_per_polygon = 10000
-) %>% 
-  image_spin(rpm = 0.1)
-
-```
-
-To spin counter-clockwise, set the `rpm` parameter to a negative number.
-
-```{r}
-spiro(
-  file = "SpinLeft.svg",
-  fixed_radius = pi,
-  cycling_radius = sqrt(8),
-  pen_radius = 0.5 * sqrt(8) / pi ,
-  windings = 81,
-  start_angle = 0,
-  points_per_polygon = 10000
-) %>% 
-  image_spin(rpm = -0.1)
-```
-
-
-These rotations are boring by themselves, but observe the grooviness of their merger:
-
-```{r}
-image_merge(
-  input = c("SpinRight.svg",
-            "SpinLeft.svg"),
- output = "SpinLeftRight.svg"
-  )
-```
-
-### Merged Spins with the Pipe Operator
+The `image_spin` function takes file name of an svg file created by the `spiro` function and adds an `animateTransform` node to the .svg. To spin clockwise, set the `rpm` parameter to a postive number. To spin counter-clockwise, set the `rpm` parameter to a negative number.
 
 This spirograph may not seem particularly interesting:
 
-```{r}
+```{r purple}
 spiro(
   colors = "purple",
   fixed_radius = 16,
@@ -732,7 +669,7 @@ spiro(
 
 This one looks almost identical to it:
 
-```{r}
+```{r black}
 spiro(
   colors = "black",
   fixed_radius = 15,
@@ -744,55 +681,52 @@ spiro(
 )
 ```
 
-We can merge and spin these images in a streamlined workflow. By default, the output of the spiro function is the file name. Thus, we can use the pipe operator `%>%` from the `magrittr` package to string commands together.  If we merge the images first, the rotations can be specified with a vector.
+However, with a black background, spinning the two images produces this unexpected effect:
 
 ```{r purple_cycle}
-c(
-  spiro(
-    colors = "purple",
-    fixed_radius = 16,
-    cycling_radius = 15,
-    pen_radius = 1.5,
-    draw_fills = FALSE,
-    line_width = 4,
-    file = "purple.svg"
-  ),
-  spiro(
-    colors = "black",
-    fixed_radius = 15,
-    cycling_radius = 14,
-    pen_radius = 1.5,
-    draw_fills = FALSE,
-    line_width = 4,
-    file = "black.svg"
-  )
-) %>%
-  image_merge(output = "purple_cycle.svg") %>%
+image_merge(
+  input = c("purple.svg", "black.svg"), 
+  output = "purple_cycle.svg") %>%
   image_spin(rpm = c(0.5,-0.5)) %>%
   add_background(color = "black")
 ```
 
+### Merged Spins with the Pipe Operator
 
 
+We can merge and spin images in a streamlined workflow. By default, the output of the spiro function is the file name. Thus, we can use the pipe operator `%>%` from the `magrittr` package to string commands together.  If we merge the images first, the rotations can be specified with a vector.
 
-```{r oslo_aster}
-n <- 10
-oslo_colors <- scico::scico(
-  n = n,
-  palette = "oslo",
-  alpha = 0.9) %>% 
-  rev()
+Suppose we have a static image we want to spin:
 
+```{r static}
 spiro(
-  file = "olso_aster.svg",
-  rotation = pi / 6,
-  points_per_polygon = 100
-  ) %>%
-  image_merge(output = "oslo_aster.svg", copies = n) %>%
-  add_fills(colors = oslo_colors) %>%
-  image_scale(scale = sqrt(0.75 ^ (seq(0, n - 1)))) %>%
-  image_spin(rpm = 1:n + 1) %>%
-  add_background(color = "black", rounding = 1)
+  file = "Static.svg",
+  fixed_radius = pi,
+  cycling_radius = sqrt(8),
+  pen_radius = 0.5 * sqrt(8) / pi ,
+  windings = 81,
+  start_angle = 0,
+  points_per_polygon = 10000
+) 
+```
+
+This is a nice spirograph already, but it becomes especially groovy when 2 copies are merged and spun slowly in opposite directions.
+
+```{r SpinLeftRight}
+spiro(
+  fixed_radius = pi,
+  cycling_radius = sqrt(8),
+  pen_radius = 0.5 * sqrt(8) / pi ,
+  windings = 81,
+  start_angle = 0,
+  points_per_polygon = 10000
+  ) %>% 
+  image_merge(
+    output = "SpinLeftRight.svg", 
+    copies = 2, 
+    delete_input = TRUE
+    ) %>% 
+  image_spin(rpm = c(-0.1,0.1))
 ```
 
 
@@ -800,7 +734,7 @@ spiro(
 
 The `image_spin` function spins the image around its center by default, but off-center rotations are possible. Here we spin an image around a point not at the center. Imagine the image is a square of size 1. The top left corner is point (0,0) and the bottom right cornder is point (1,1). The center is point (0.5,0.5). Here we spin the image around the point (0.25,0.38), which centered horizontally but a little above the vertical center. I have added a red dot to show the point around which the image is rotating.
 
-```{r}
+```{r off_center}
 spiro(
   fixed_radius = 5,
   cycling_radius = 3,
@@ -820,7 +754,7 @@ spiro(
 
 You can make dots trace your paths:
 
-```{r}
+```{r pathdot1}
 spiro(
   fixed_radius = 5,
   cycling_radius = 1,
@@ -828,16 +762,16 @@ spiro(
   draw_fills = FALSE,
   rotation = pi / 10,
   file = "pathdot1.svg"
-) %>%
+  ) %>%
   add_pathdot()
-
-
 ```
 
 If your spirograph has multiple colors and multiple groups, a pathdot will be added to each one. You can also set the duration of the animation in seconds.
 
-```{r}
+```{r pathdot5}
+# Make Colors
 pathcolors <- scales::viridis_pal()(5)[c(4, 5, 1, 2, 3)]
+
 spiro(
   fixed_radius = 5,
   cycling_radius = 1,
@@ -848,16 +782,15 @@ spiro(
   line_width = 10,
   rotation = pi / 10,
   file = "pathdot5.svg"
-) %>%
+  ) %>%
   add_pathdot(
     colors = pathcolors,
-    duration = 3
-    )
+    duration = 3)
 ```
 
 You can add multiple layers of pathdots. Here I have made all the lines white to make it seem that the dots are whizzing about on their own.
 
-```{r}
+```{r pathdot25}
 spiro(
   fixed_radius = 5,
   cycling_radius = 1,
@@ -881,7 +814,7 @@ spiro(
 
 The `spiro` function normally returns the file name, but it is possible to return the raw data by setting `savefile` to FALSE. Thus, it is easy to use the data with `ggplot2` or any other plotting system you wish to use.
 
-```{r spriro_data, dev="svg", fig.width=7, fig.height=7, out.height=700, out.width=700}
+```{r spiro_data, dev="svg", fig.width=7, fig.height=7, out.height=700, out.width=700}
 library(ggplot2)
 library(dplyr)
 d <- spiro(
@@ -907,16 +840,5 @@ d %>%
   theme(legend.position = "none") +
   coord_equal()
 
-```
-
-
-
-```{r}
-library(bsplus)
-bs_carousel(id = "spiro") %>%
-  bs_append(content = bs_carousel_image(src = "aster.svg")) %>%
-  bs_append(content = bs_carousel_image(src = "blue_gem.svg")) %>%
-  bs_append(content = bs_carousel_image(src = "cork.svg")) %>%
-  bs_append(content = bs_carousel_image(src = "purple_cycle.svg"))
 ```
 
