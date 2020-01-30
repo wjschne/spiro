@@ -1,13 +1,17 @@
 Package: spiro
-Title: Creates spirographs
-Version: 0.0.0.9000
+Title: Spirographs
+Version: 0.1.1
 Authors@R: 
     person(given = "W. Joel",
            family = "Schneider",
            role = c("aut", "cre"),
-           email = "w.joel.schneider@gmail.com")
-Description: This package has functions to create
-    spirographs.
+           email = "w.joel.schneider@gmail.com",
+           comment = c(ORCID = "0000-0002-8393-5316"))
+Description: Familiar to those who have spent hours with the classic toy "Spirograph," 
+             hypotrochoids and epitrochoids are shapes formed by tracing the path of 
+             a pen inside a circle as it rolls around inside or outside another circle.
+             With this package, you can create, modify, and animate spirograph-like 
+             shapes in the svg format.
 License: CC0
 URL: https://github.com/wjschne/spiro
 BugReports: https://github.com/wjschne/spiro/issues
@@ -25,14 +29,18 @@ Imports:
     purrr,
     scales,
     scico,
+    paletteer,
     stringr,
     tibble,
     tidyr,
-    xml2
+    xml2, 
+    rlang,
+    assertthat
 Suggests: 
-    rmarkdown
-VignetteBuilder: 
-    knitr
+    rmarkdown,
+    spelling,
+    covr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 7.0.2
+Language: en-US

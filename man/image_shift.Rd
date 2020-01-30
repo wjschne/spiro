@@ -25,8 +25,8 @@ shift image
 }
 \examples{
 library(spiro)
-library(magrittr)
 spiro(fixed_radius = 3,
-      cycling_radius = 1) \%>\%
+      cycling_radius = 1,
+      file = "image_shift.svg") \%>\%
   image_shift(x = 200, y = 200)
 }

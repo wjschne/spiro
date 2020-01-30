@@ -4,8 +4,13 @@
 \alias{image_rotate}
 \title{Rotate image.}
 \usage{
-image_rotate(input, degrees = 90, radians = NA, openfile = TRUE,
-  output = input)
+image_rotate(
+  input,
+  degrees = 90,
+  radians = NA,
+  openfile = TRUE,
+  output = input
+)
 }
 \arguments{
 \item{input}{File name of .svg file to input}
@@ -26,7 +31,8 @@ output name
 }
 \examples{
 library(spiro)
-library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
+spiro(fixed_radius = 3,
+      cycling_radius = 1,
+      file = "image_rotate.svg") \%>\%
     image_rotate(degrees = 90)
 }

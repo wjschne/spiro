@@ -1,0 +1,128 @@
+body {
+    margin:auto;
+    font-family:Palatino,"Palatino Linotype",Times,serif;
+    font-size:18pt;
+    text-align:left;
+    max-width:7.5in
+}
+
+
+
+th,td {
+    padding-bottom:5px;
+    padding-top:5px;
+    padding-left:10px;
+    padding-right:10px;
+    vertical-align:top
+}
+
+.references p {
+    padding-left:2.5em;
+    text-indent:-2.5em
+}
+
+h4.author em,h4.date em,h4.author_afil em {
+    text-align:left;
+    font-weight:400;
+    font-style:normal
+}
+
+caption {
+    font-size:1.5em;
+    text-align:left
+}
+
+blockquote p {
+    text-indent:0;
+    margin-left:2.5em
+}
+
+blockquote p + p {
+    text-indent:2.5em
+}
+
+pre,img {
+    max-width:100%
+}
+
+img {
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+/*     box-shadow:2px 2px 5px #888;
+    -moz-box-shadow:2px 2px 5px #888;
+    -webkit-box-shadow:2px 2px 5px #888;
+    -khtml-box-shadow:2px 2px 5px #888 */
+}
+
+pre {
+  padding:5px;
+  border: 1px solid #D5DAF0;  
+}
+
+code {
+  font-family: Consolas,monospace;
+  border:none;
+  max-width:6.5in;
+  color:#4070A0
+}
+
+pre code {
+  background-color:#D5DBF7;
+  font-family: Consolas, monospace;
+  text-align:left;
+  display:block;
+  padding:5px;
+  border:1px solid #ccc;
+  overflow:auto;
+  min-width: 98%;
+  }
+
+.r code{
+  background-color:#DCDCDC;
+  font-family:Consolas,monospace;
+  border:1px solid #ccc;
+  text-align:left;
+  padding:5px;
+  color:#282840;
+  font-size:14pt;
+  }
+
+
+sup,sub {
+    position:relative;
+    vertical-align:0
+}
+
+sup {
+    bottom:.4em
+}
+
+sub {
+    top:.4em
+}
+
+.header th {
+    border-bottom:1px solid #000;
+    border-top:1px solid #000
+}
+
+.balloonstyle{
+position:absolute;
+top: -500px;
+left: 0;
+visibility: hidden;
+z-index: 100;
+background-color: LightGray;
+width: 630px;
+text-align:left;
+padding:15px;
+border-radius:15px;
+font-size:14pt;
+margin:10px auto;
+/*Remove below line to remove shadow. Below line should always appear last within this CSS;*/
+filter: progid:DXImageTransform.Microsoft.Shadow(color=gray,direction=135,Strength=5);
+}
+
+.balloonstyle img {max-width:600px;margin:0px,padding:0px}
+

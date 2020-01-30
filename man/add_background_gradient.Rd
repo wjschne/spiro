@@ -4,10 +4,19 @@
 \alias{add_background_gradient}
 \title{Add background color radial gradients}
 \usage{
-add_background_gradient(input, colors = c("white", "black"),
-  stops = seq(0, 1, length.out = length(colors)), center_x = 0.5,
-  center_y = 0.5, focus_x = 0.5, focus_y = 0.5, radius = sqrt(2),
-  rounding = 0, openfile = TRUE, output = input)
+add_background_gradient(
+  input,
+  colors = c("white", "black"),
+  stops = seq(0, 1, length.out = length(colors)),
+  center_x = 0.5,
+  center_y = 0.5,
+  focus_x = 0.5,
+  focus_y = 0.5,
+  radius = sqrt(2),
+  rounding = 0,
+  openfile = TRUE,
+  output = input
+)
 }
 \arguments{
 \item{input}{File name of .svg file to input}
@@ -40,7 +49,10 @@ Add background color radial gradients
 }
 \examples{
 library(spiro)
-library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
-    add_background(color = "black")
+spiro(
+   fixed_radius = 3,
+   cycling_radius = 1,
+   file = "add_background_gradient.svg"
+   ) \%>\%
+   add_background_gradient(color = c("black","white"))
 }

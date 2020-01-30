@@ -2,10 +2,16 @@
 % Please edit documentation in R/spirograph.R
 \name{image_animate}
 \alias{image_animate}
-\title{Animate image}
+\title{Animate image. Resulting file best viewed in Google Chrome.}
 \usage{
-image_animate(input, attribute = "opacity", values = c(0, 1, 0),
-  duration = 10, openfile = TRUE, output = input)
+image_animate(
+  input,
+  attribute = "opacity",
+  values = c(0, 1, 0),
+  duration = 10,
+  openfile = TRUE,
+  output = input
+)
 }
 \arguments{
 \item{input}{File name of .svg file to input}
@@ -24,10 +30,14 @@ image_animate(input, attribute = "opacity", values = c(0, 1, 0),
 output name
 }
 \description{
-Animate image
+Animate image. Resulting file best viewed in Google Chrome.
 }
 \examples{
 library(spiro)
-library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1)
+spiro(fixed_radius = 3,
+      cycling_radius = 1,
+      file = "image_animate.svg") \%>\%
+   image_animate(attribute = "opacity",
+                 duration = 2,
+                 values = c(0.3,0.9,0.3))
 }

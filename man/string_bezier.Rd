@@ -4,8 +4,15 @@
 \alias{string_bezier}
 \title{Make string bezier}
 \usage{
-string_bezier(file = "bezier.svg", x = c(0, 0, 1), y = c(1, 0, 0),
-  n = 20, color = "royalblue", openfile = TRUE, ...)
+string_bezier(
+  file = "bezier.svg",
+  x = c(0, 0, 1),
+  y = c(1, 0, 0),
+  n = 20,
+  color = "royalblue",
+  openfile = TRUE,
+  ...
+)
 }
 \arguments{
 \item{file}{Name of the output file. Defaults to "bezier.svg"}
@@ -30,23 +37,12 @@ Make string bezier
 }
 \examples{
 library(spiro)
-library(magrittr)
 string_bezier(
-   file = "bezier_redblueblack.svg",
+   file = "string_bezier.svg",
    x = c(0,0,1),
    y = c(1,0,0),
    color = c("red","blue","black"),
    n = 100,
    lwd = 0.3
    )
-string_bezier(
- file = "bezier_sequence.svg",
- x = c(-1,1,0,-1,1,-1, 0,1,-1,1),
- y = c( 0,0,1, 0,0, 0,-1,0, 0,0),
- color = c("#006B6B","#FFFFFF","black","black","black"),
- n = 200,
- lwd = 5,
- ljoin = 1
- ) \%>\%
-   add_background(color = "#108998")
 }

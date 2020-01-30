@@ -2,11 +2,19 @@
 % Please edit documentation in R/spirograph.R
 \name{add_pathdot}
 \alias{add_pathdot}
-\title{Add a moving circle to paths}
+\title{Add a moving circle to paths. Resulting file best viewed in Google Chrome.}
 \usage{
-add_pathdot(input, colors = "red", transparency = NA, radius = 3,
-  duration = 10, delay = 0, path_id = "path", openfile = TRUE,
-  output = input)
+add_pathdot(
+  input,
+  colors = "red",
+  transparency = NA,
+  radius = 3,
+  duration = 10,
+  delay = 0,
+  path_id = "pathdot",
+  openfile = TRUE,
+  output = input
+)
 }
 \arguments{
 \item{input}{File name of .svg file to input}
@@ -31,11 +39,14 @@ add_pathdot(input, colors = "red", transparency = NA, radius = 3,
 output name
 }
 \description{
-Add a moving circle to paths
+Add a moving circle to paths. Resulting file best viewed in Google Chrome.
 }
 \examples{
 library(spiro)
-library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
-    add_background(color = "black")
+spiro(
+ fixed_radius = 3,
+ cycling_radius = 1,
+ file = "add_pathdot.svg"
+ ) \%>\%
+ add_pathdot(duration = 3)
 }

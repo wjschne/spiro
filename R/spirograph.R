@@ -1,10 +1,14 @@
 #' Make spirograph
+#'
+#' `spiro` creates a spirograph.
+#'
+#' The `spiro` function by default returns an object of class spiro. This object contains the name of the file that `spiro` has created. Its print method opens the file in your computers default svg viewer. Google Chrome is the viewer on which best results will likely be seen. When used with knitr, object of class spiro will print via knitr::include_graphics()
 #' @param fixed_radius The radius of the fixed circle being cycled around. Can be positive or negative. Defaults to 3.
 #' @param cycling_radius The radius of the moving circle cycling around the fixed circle. Can be positive or negative. Defaults to 1.
 #' @param pen_radius The pen placement inside the moving circle cycling around the fixed circle. Can be positive or negative.
 #' @param windings The number of times the the moving circle winds around the fixed circle.
-#' @param color_groups = Number of groups in group_id variable
-#' @param colors Vector of colors for groups. Defaults to black when color_groups is 1 and to the viridis scale when color_groups > 1.
+#' @param color_groups Number of groups in group_id variable
+#' @param colors Vector of colors for groups. Defaults to a random hsv color when color_groups is 1 and to a random palette from the paletteer package when color_groups > 1.
 #' @param transparency Transparency of colors. Ranges from 0 to 1. Default is NA (i.e., leave the colors as specified in the colors argument).
 #' @param color_cycles The number of times the color vector  is recycled
 #' @param color_sort Arranges all paths of the same color to be written in groups
@@ -16,16 +20,20 @@
 #' @param ylim The limits of the y coordinates. For example, c(-5,5). NULL means that the limits are determined by the data point that has the largest distance from the origin.
 #' @param rotation The number of radians by which the entire figure should be rotated around the origin of the fixed circle
 #' @param start_angle The number of radians on the fixed circle's arc where the moving circle starts cycling.
-#' @param points_per_polygon = The number of points for each color grouping
+#' @param points_per_polygon The number of points for each color grouping
 #' @param rule Character value specifying the path fill mode: either "evenodd" or "winding". Defaults to "evenodd"
 #' @param openfile Open file in default program for .svg format. Defaults to TRUE.
 #' @param end_at_beginning Adds the first point to the end of the figure but with the colors of the last color group. Defaults to FALSE.
 #' @param savefile Save a file. Defaults to TRUE.
 #' @param file Name of the output file. Defaults to "spiro.svg"
 #' @param ... parameters passed to the par function
-#' @return file by default or tibble with data if savefile if FALSE
+#' @importFrom rlang .data
+#' @return object of class spiro, which contains the file name. If savefile = FALSE, will return a tibble with raw data.
 #' @examples
-#' spiro(fixed_radius = 3, cycling_radius = 1)
+#' spiro(
+#'   fixed_radius = 3,
+#'   cycling_radius = 1,
+#'   file = "spiro.svg")
 #' @export
 spiro <- function(
                   fixed_radius = 3,
@@ -83,12 +91,18 @@ spiro <- function(
     stop("file must end with '.svg'")
   }
 
+  # Colors ----
+
   # Set default colors
   if (all(is.na(colors))) {
     if (color_groups == 1) {
-      colors <- "royalblue"
+      colors <- grDevices::hsv(stats::runif(1))
     } else {
-      colors <- scales::viridis_pal()(color_groups)
+      p <- paletteer::palettes_c_names %>%
+        dplyr::sample_n(1)
+      colors <- paletteer::paletteer_c(
+        palette = paste0(dplyr::pull(p, .data$package),"::",dplyr::pull(p, .data$palette)),
+        n = color_groups)
     }
   }
 
@@ -103,7 +117,7 @@ spiro <- function(
     length.out = points_per_polygon * color_cycles * color_groups
   )
 
-  # X and Y coordinates
+  # X and Y coordinates ----
   x <- (fixed_radius - cycling_radius) * cos(t) +
     pen_radius * cos(t * (fixed_radius - cycling_radius) / cycling_radius)
   y <- (fixed_radius - cycling_radius) * sin(t) -
@@ -120,7 +134,7 @@ spiro <- function(
   )
 
 
-  # Tibble to return
+  # Tibble to return ----
   d <- tibble::tibble(
     x = xy[, 1] + origin_x,
     y = xy[, 2] + origin_y,
@@ -137,38 +151,24 @@ spiro <- function(
   )
 
   if (color_groups > 1) {
-    # Find where color groups transitions
+    # Find where color groups transition
     d_transitions <- dplyr::mutate(
       d,
-      transition = color_id != dplyr::lag(color_id, default = 1)
+      transition = .data$color_id != dplyr::lag(.data$color_id, default = 1)
     )
 
     # Insert transition rows
     d_transitions <- dplyr::mutate(
       d_transitions,
-      color_id = dplyr::if_else(
-        transition,
-        dplyr::lag(color_id, default = 1),
-        color_id
-      ),
-      color_cycle_id = dplyr::if_else(
-        transition,
-        dplyr::lag(color_cycle_id,
-          default = 1
-        ),
-        color_cycle_id
-      ),
-      id = dplyr::if_else(
-        transition,
-        dplyr::lag(id, default = 1),
-        id
-      )
+      color_id = dplyr::lag(.data$color_id, default = 1),
+      color_cycle_id = dplyr::lag(.data$color_cycle_id, default = 1),
+      id = dplyr::lag(.data$id, default = 1)
     )
 
     # Filter
     d_transitions <- dplyr::filter(
       d_transitions,
-      transition
+      .data$transition
     )
 
     d <- dplyr::arrange(
@@ -176,9 +176,9 @@ spiro <- function(
         d,
         d_transitions
       ),
-      color_cycle_id,
-      color_id,
-      id
+      .data$color_cycle_id,
+      .data$color_id,
+      .data$id
     )
   }
 
@@ -192,12 +192,12 @@ spiro <- function(
     d <- dplyr::bind_rows(d, d_last)
   }
 
-  nd <- tidyr::nest(dplyr::group_by(d, color_cycle_id, color_id))
-  nd <- dplyr::mutate(nd, col = colors[color_id])
-  nd <- dplyr::rename(nd, x = data)
+  nd <- tidyr::nest(dplyr::group_by(d, .data$color_cycle_id, .data$color_id))
+  nd <- dplyr::mutate(nd, col = as.character(colors[.data$color_id]))
+  nd <- dplyr::rename(nd, x = .data$data)
 
   if (color_sort) {
-    nd <- dplyr::arrange(nd, col)
+    nd <- dplyr::arrange(nd, .data$col)
   }
   biggest_deviation <-
     max(sqrt((d[, "x"] - origin_x)^2 +
@@ -229,41 +229,52 @@ spiro <- function(
   if (!is.null(xlim)) bounds_x <- xlim
   if (!is.null(ylim)) bounds_y <- ylim
 
+  # Find dimensions of plot
   plot_width <- bounds_x[2] - bounds_x[1]
   plot_height <- bounds_y[2] - bounds_y[1]
 
+  # Save plot?----
   if (savefile) {
+    # Make plot have 10 as the largest dimension and scale the other
     grDevices::svg(
-      file = file,
+      filename = file,
       width = ifelse(plot_width < plot_height, 10, 10 * plot_width / plot_height),
       height = ifelse(plot_height < plot_width, 10, 10 * plot_height / plot_width),
       bg = NA
     )
     graphics::plot.new()
+    # Set margins to 0
     graphics::par(mar = rep(0, 4), ...)
 
+    # Set bounds
     graphics::plot.window(
       xlim = bounds_x,
       ylim = bounds_y,
       asp = 1
     )
 
+    # Draw fills or lines?
     if (draw_fills) {
       purrr::pwalk(
-        dplyr::select(nd, x, col),
+        dplyr::select(dplyr::ungroup(nd), x, col),
         graphics::polypath,
         border = NA,
         rule = rule
       )
     } else {
-      purrr::pwalk(dplyr::select(nd, x, col), graphics::lines, lwd = line_width)
+      purrr::pwalk(
+        dplyr::select(dplyr::ungroup(nd), x, col) ,
+        graphics::lines,
+        lwd = line_width)
     }
-
+    # Finish saving
     grDevices::dev.off()
 
 
-
+    # Read saved file as xml
     x1 <- safe_read(file)
+
+    # Set height and width to 100%
     xml2::xml_set_attr(
       x = x1,
       attr = "height",
@@ -275,20 +286,24 @@ spiro <- function(
       value = "100%"
     )
 
+    # Find children and give first child a name by its parameters
     g <- xml2::xml_children(x1)
     xml2::xml_set_attr(
       x = g[1],
       attr = "id",
       value = paste("spiro", fixed_radius, cycling_radius, pen_radius, sample(1:100000, 1), sep = "_")
     )
+    # Write data back to file
     safe_write(x1, file)
 
+    # Open file in default .svg viewer?
     if (openfile) {
-      profvis::pause(0.1)
+      # Give file string the spiro class, which has a print function
       class(file) <- c("spiro", class(file))
       file
     }
   } else {
+    # Plot spirogrpah and return raw data----
     graphics::plot.new()
     graphics::par(pty = "s", mar = rep(0, 4), ...)
     xrange <- range(d[, 1], na.rm = TRUE)
@@ -300,13 +315,13 @@ spiro <- function(
 
     if (draw_fills) {
       purrr::pwalk(
-        dplyr::select(nd, x, col),
+        dplyr::select(dplyr::ungroup(nd), x, col),
         graphics::polypath,
         border = NA,
         rule = rule
       )
     } else {
-      purrr::pwalk(dplyr::select(nd, x, col), graphics::lines, lwd = line_width)
+      purrr::pwalk(dplyr::select(dplyr::ungroup(nd), x, col), graphics::lines, lwd = line_width)
     }
     return(d)
   }
@@ -324,8 +339,10 @@ spiro <- function(
 #' @return output name
 #' @examples
 #' library(spiro)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     image_spin(rpm = 1)
+#' spiro(fixed_radius = 3,
+#'       cycling_radius = 1,
+#'       file = "image_spin.svg") %>%
+#'   image_spin(rpm = 1)
 #' @export
 image_spin <- function(
                        input,
@@ -421,8 +438,10 @@ r = "{dot_size}"'
 #' @return output name
 #' @examples
 #' library(spiro)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     image_scale(scale = 0.5)
+#' spiro(fixed_radius = 3,
+#'       cycling_radius = 1,
+#'       file = "image_scale.svg") %>%
+#'   image_scale(scale = 0.5)
 #' @export
 image_scale <- function(
                         input,
@@ -475,7 +494,8 @@ image_scale <- function(
 #' @examples
 #' library(spiro)
 #' spiro(fixed_radius = 3,
-#'       cycling_radius = 1) %>%
+#'       cycling_radius = 1,
+#'       file = "image_shift.svg") %>%
 #'   image_shift(x = 200, y = 200)
 #' @export
 image_shift <- function(
@@ -533,10 +553,11 @@ image_shift <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @return output name
-#' @
 #' @examples
 #' library(spiro)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
+#' spiro(fixed_radius = 3,
+#'       cycling_radius = 1,
+#'       file = "image_rotate.svg") %>%
 #'     image_rotate(degrees = 90)
 #' @export
 image_rotate <- function(
@@ -588,17 +609,18 @@ image_rotate <- function(
 #' @return output name
 #' @examples
 #' library(spiro)
-#' c(spiro(fixed_radius = 3, cycling_radius = 1),
-#'   spiro(fixed_radius = 3, cycling_radius = 1,
-#'         rotation = pi, colors = "firebrick")) %>%
-#'   image_merge(output = "merged.svg")
-
+#' c(spiro(fixed_radius = 6, transparency = 0.5),
+#'   spiro(fixed_radius = 3, transparency = 0.5)
+#' ) %>%
+#'   image_merge(
+#'     output = "image_merge.svg",
+#'     delete_input = TRUE)
 #' @export
 image_merge <- function(
                         input,
                         output = NA,
                         copies = 1,
-                        delete_input = FALSE,
+                        delete_input = TRUE,
                         openfile = TRUE) {
 
   # Verify that input file names end with .svg
@@ -620,13 +642,12 @@ image_merge <- function(
 
   ## Give unique output name if output is NA
   output <- spiro_name(output)
-
   safe_write(x1[[1]], output)
 
   # Delete input files
   if (delete_input) {
     remove_inputs <- input[!(input %in% output)]
-    file.remove(remove_inputs)
+    file.remove(as.character(remove_inputs))
   }
   if (!("spiro" %in% class(output))) class(output) <- c("spiro", class(output))
   if (openfile) output
@@ -642,9 +663,12 @@ image_merge <- function(
 #' @return output name
 #' @examples
 #' library(spiro)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
+#' spiro(fixed_radius = 3,
+#'       cycling_radius = 1,
+#'       file = "image_animate.svg") %>%
 #'    image_animate(attribute = "opacity",
-#'                  values = (0.3,0.9,0.3))
+#'                  duration = 2,
+#'                  values = c(0.3,0.9,0.3))
 #' @export
 image_animate <- function(
                           input,
@@ -686,8 +710,11 @@ image_animate <- function(
 #' @return output name
 #' @examples
 #' library(spiro)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background(color = "black")
+#' spiro(
+#'   fixed_radius = 3,
+#'   cycling_radius = 1,
+#'   file = "add_background.svg") %>%
+#'   add_background(color = "black")
 #' @export
 add_background <- function(
                            input,
@@ -756,8 +783,12 @@ add_background <- function(
 #' @return output name
 #' @examples
 #' library(spiro)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background(color = "black")
+#' spiro(
+#'    fixed_radius = 3,
+#'    cycling_radius = 1,
+#'    file = "add_background_gradient.svg"
+#'    ) %>%
+#'    add_background_gradient(color = c("black","white"))
 #' @export
 add_background_gradient <- function(
                                     input,
@@ -850,8 +881,14 @@ add_background_gradient <- function(
 #' #' @return output name
 #' @examples
 #' library(spiro)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background(color = "black")
+#' spiro(
+#'   fixed_radius = 3,
+#'   cycling_radius = 1,
+#'   file = "add_lines.svg"
+#'   ) %>%
+#'   add_lines(
+#'     colors = "firebrick",
+#'     line_width = 3)
 #' @export
 add_lines <- function(
                       input,
@@ -871,6 +908,7 @@ add_lines <- function(
   }
 
   x1 <- safe_read(input)
+
   # Set colors to hex
   colors <- scales::alpha(colors)
   if (!is.na(transparency)) colors <- scales::alpha(colors, transparency)
@@ -915,8 +953,12 @@ add_lines <- function(
 #' #' @return output name
 #' @examples
 #' library(spiro)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background(color = "black")
+#' spiro(
+#'  fixed_radius = 3,
+#'  cycling_radius = 1,
+#'  file = "add_fills.svg"
+#'  ) %>%
+#'  add_fills(colors = "black")
 #' @export
 add_fills <- function(
                       input,
@@ -987,8 +1029,12 @@ add_fills <- function(
 #' @return output name
 #' @examples
 #' library(spiro)
-#' spiro(fixed_radius = 3, cycling_radius = 1) %>%
-#'     add_background(color = "black")
+#' spiro(
+#'  fixed_radius = 3,
+#'  cycling_radius = 1,
+#'  file = "add_pathdot.svg"
+#'  ) %>%
+#'  add_pathdot(duration = 3)
 #' @export
 add_pathdot <- function(
                         input,
@@ -997,7 +1043,7 @@ add_pathdot <- function(
                         radius = 3,
                         duration = 10,
                         delay = 0,
-                        path_id = "path",
+                        path_id = "pathdot",
                         openfile = TRUE,
                         output = input) {
 
@@ -1028,14 +1074,19 @@ add_pathdot <- function(
       paste0(path_id, "_", i)
     )
 
-    circ <- xml2::read_xml(
-      glue::glue('<circle id="circle_{path_id}_{i}" cx="" cy="" r="{radius}" fill="{colors[color_id[i]]}">
-    <animateMotion dur="{duration}s" repeatCount="indefinite" begin="{delay}s">
+    for (j in duration) {
+
+      circ <- xml2::read_xml(
+        glue::glue('<circle id="circle_{path_id}_{i}" r="{radius}" fill="{colors[color_id[i]]}">
+    <animateMotion dur="{j}s" repeatCount="indefinite" begin="{delay}s">
       <mpath href="#{path_id}_{i}"/>
                            </animateMotion>
                              </circle>')
-    )
-    xml2::xml_add_child(g, circ)
+      )
+      xml2::xml_add_child(g, circ)
+    }
+
+
   }
   safe_write(x1, output)
   if (!("spiro" %in% class(output))) class(output) <- c("spiro", class(output))
@@ -1043,19 +1094,126 @@ add_pathdot <- function(
 }
 
 
-#' Custom print function for spiro objects
-#' @param file Name of the output file.
+#' Spin image. Resulting file best viewed in Google Chrome.
+#' @param input File name of .svg file to input
+#' @param output File name of .svg file to output. Default is to overwrite the input file.
+#' @param location a vector of coordinates for the start button
+#' @param fill button fill color
+#' @param color button text color
+#' @param radius button radius
+#' @param start_label start button text
+#' @param stop_label stop button text
+#' @param font_family button text font family
+#' @param font_size button text font size
+#' @param openfile Open file in default program for .svg format. Defaults to FALSE.
+#' @return output name
+#' @examples
+#' library(spiro)
+#' spiro(fixed_radius = 3,
+#'       cycling_radius = 1,
+#'       file = "image_spin.svg") %>%
+#'   image_spin(rpm = 1)
 #' @export
-print.spiro <- function(file) {
-  pander::openFileInOS(file)
+add_restart <- function(
+  input,
+  location = c(0.05, 0.95),
+  fill = "white",
+  color = "black",
+  radius = 20,
+  start_label = "Start",
+  stop_label = "Stop",
+  font_family = "inherit",
+  font_size = 14,
+  openfile = TRUE,
+  output = input) {
+
+  # Verify that input file names end with .svg
+  if (any(tools::file_ext(input) != "svg")) {
+    stop(paste0(
+      "All file names must end with '.svg'. ",
+      "Input file name(s): ",
+      paste0(input, collapse = ",")
+    ))
+  }
+
+  # Read file
+  x1 <- safe_read(input)
+
+    # Get dimensions of viewBox
+  viewbox <- xml2::xml_attr(x = x1, attr = "viewBox") %>%
+    stringr::str_split(pattern = " ") %>%
+    unlist() %>%
+    as.numeric()
+  width <- viewbox[3]
+  height <- viewbox[4]
+
+  fn <- stringr::str_remove(as.character(input),"\\.svg")
+
+  start_circle <- paste0(fn,"_start")
+  stop_circle <- paste0(fn,"_stop")
+
+
+  # Find all g elements
+  # g1 <- xml2::xml_find_all(x1, "//d1:g")
+  at1 <- xml2::xml_find_all(x = x1, "//d1:animateTransform")
+  xml2::xml_attr(at1, "begin") <- paste0(start_circle,".click")
+  xml2::xml_attr(at1, "end") <- paste0(stop_circle,".click")
+
+  am1 <- xml2::xml_find_all(x = x1, "//d1:animateMotion")
+  xml2::xml_attr(am1, "begin") <- paste0(start_circle,".click+",xml2::xml_attr(am1, "begin"))
+  xml2::xml_attr(am1, "end") <- paste0(stop_circle,".click")
+
+  a1 <- xml2::xml_find_all(x = x1, "//d1:animate")
+  xml2::xml_attr(a1, "begin") <- paste0(start_circle,".click")
+  xml2::xml_attr(a1, "end") <- paste0(stop_circle,".click")
+
+
+  rb_start <- xml2::read_xml(glue::glue('
+<g id="{start_circle}" transform="translate({location[1] * width}, {location[2] * height})" style="cursor: pointer;">
+<circle fill="{fill}" r="{radius}" />
+<text fill="{color}" text-anchor="middle" alignment-baseline="central" style="font-family:{font_family};font-size:{font_size}pt">{start_label}</text>
+</g>'))
+
+  xml2::xml_add_child(.where = 0,
+                      .x = x1,
+                      .value = rb_start)
+
+  rb_stop <- xml2::read_xml(glue::glue('
+<g id="{stop_circle}" transform="translate({(1-location[1]) * width}, {location[2] * height})" style="cursor: pointer;">
+<circle fill="{fill}" r="{radius}"/>
+<text fill="{color}" text-anchor="middle" alignment-baseline="central" style="font-family:{font_family};font-size:{font_size}pt">{stop_label}</text>
+</g>'))
+
+  xml2::xml_add_child(.where = 0,
+                      .x = x1,
+                      .value = rb_stop)
+  # Save file
+  safe_write(x1, output)
+
+  # Add spiro class to output
+
+  if (!("spiro" %in% class(output))) {
+    class(output) <- c("spiro", class(output))
+  }
+  if (openfile) output
 }
 
-#' define a knit_print method for objects of the class spiro
-#' @param file Name of the output file.
-#' @param ... Parameters passed to knitr::include_graphics
+
+
+#' Custom print function for spiro objects. It opens the .svg file with your default svg viewer with the pander::openFileInOS function.
+#' @param x Name of the output file.
+#' @keywords internal
 #' @export
-knit_print.spiro <- function(file, ...) {
-  knitr::include_graphics(path = file)
+print.spiro <- function(x, ...) {
+  pander::openFileInOS(x, ...)
+}
+
+#' define a knit_print method for objects of the class spiro. It inserts the .svg file into the document with the knitr::include_graphics function
+#' @param x Name of the output file.
+#' @keywords internal
+#' @export
+knit_print.spiro <- function(x, ...) {
+  knitr::include_graphics(path = x)
 }
 
 #' Make string bezier
@@ -1066,27 +1224,18 @@ knit_print.spiro <- function(file, ...) {
 #' @param color Vector of colors
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @param ... parameters passed to the segments function
+#' @importFrom rlang .data
 #' @return file by default or tibble with data if savefile if FALSE
 #' @examples
 #' library(spiro)
 #' string_bezier(
-#'    file = "bezier_redblueblack.svg",
+#'    file = "string_bezier.svg",
 #'    x = c(0,0,1),
 #'    y = c(1,0,0),
 #'    color = c("red","blue","black"),
 #'    n = 100,
 #'    lwd = 0.3
 #'    )
-#' string_bezier(
-#'  file = "bezier_sequence.svg",
-#'  x = c(-1,1,0,-1,1,-1, 0,1,-1,1),
-#'  y = c( 0,0,1, 0,0, 0,-1,0, 0,0),
-#'  color = c("#006B6B","#FFFFFF","black","black","black"),
-#'  n = 200,
-#'  lwd = 5,
-#'  ljoin = 1
-#'  ) %>%
-#'    add_background(color = "#108998")
 #' @export
 string_bezier <- function(
                           file = "bezier.svg",
@@ -1097,6 +1246,8 @@ string_bezier <- function(
                           openfile = TRUE,
                           ...) {
   k <- length(x)
+  if (k < 3) stop("x must have at least three values (e.g., x = c(0,0,1)).")
+  if (length(y) < 3) stop("y must have at least three values (e.g., y = c(1,0,0)).")
   d <- tibble::tibble(
     id = seq(-1, k - 2),
     x0 = x,
@@ -1107,7 +1258,7 @@ string_bezier <- function(
     y2 = dplyr::lag(y, 2)
   )
 
-  d <- dplyr::filter(d, id > 0)
+  d <- dplyr::filter(d, .data$id > 0)
   makeSegments <- function(id, x0, x1, x2, y0, y1, y2) {
     x_1 <- seq(x0, x1, length.out = n)
     x_2 <- seq(x1, x2, length.out = n)
@@ -1148,12 +1299,16 @@ string_bezier <- function(
 
   grDevices::dev.off()
   if (openfile) {
-    profvis::pause(0.1)
     class(file) <- c("spiro", class(file))
     file
   }
 }
 
+#' Writes file with a delay to reduce chance of file conflicts
+#' @param file Name of file
+#' @keywords internal
+#' @usage NULL
+#' @export
 safe_write <- function(x, f) {
   try({
     profvis::pause(0.1)
@@ -1162,6 +1317,12 @@ safe_write <- function(x, f) {
   })
 }
 
+#' Reads file with a delay to reduce chance of file conflicts
+#' @param file Name of file
+#' @return xml for use by xml2 functions
+#' @keywords internal
+#' @usage NULL
+#' @export
 safe_read <- function(file) {
   try({
     profvis::pause(0.1)
@@ -1169,6 +1330,13 @@ safe_read <- function(file) {
   })
 }
 
+
+#' checks if file exists and creates unique name if not
+#' @param file Name of file
+#' @return Name of file
+#' @keywords internal
+#' @usage NULL
+#' @export
 spiro_name <- function(file) {
   ## Check if file exists
   if (is.na(file)) {
@@ -1193,4 +1361,64 @@ spiro_name <- function(file) {
     }
   }
   file
+}
+
+#' Add a circle to the image
+#' @param input File name of .svg file to input
+#' @param x x-coordinate of circle center (0 to 1)
+#' @param y y-coordinate of circle center (0 to 1)
+#' @param r radius (0 to 1)
+#' @param color line color
+#' @param fill fill color
+#' @param line_width width of line
+#' @param openfile Open file in default program for .svg format. Defaults to FALSE.
+#' @param output File name of .svg file to output. Default is to overwrite the input file.
+#' @return output name
+#' @export
+#' @examples
+#' spiro(fixed_radius = 3,
+#'       cycling_radius = 1,
+#'       file = "add_circle_example.svg",
+#'       colors = "red") %>%
+#'   add_circle(r = 0.308, fill = "white", color = "white")
+add_circle <- function(
+  input,
+  x = 0.5,
+  y = 0.5,
+  r = 1,
+  color = "black",
+  fill = "none",
+  line_width = 1,
+  openfile = TRUE,
+  output = input) {
+
+  # Verify that input file names end with .svg
+  if (any(tools::file_ext(input) != "svg")) {
+    stop(paste0(
+      "All file names must end with '.svg'. ",
+      "Input file name(s): ",
+      paste0(input, collapse = ",")
+    ))
+  }
+  # read input file
+  x1 <- safe_read(input)
+
+  # convert color to hex
+  color_rgb <- scales::alpha(colour = color)
+
+  # Make circle svg text
+  circle_text <- paste0(glue::glue('<circle cx="{x * 720}" cy="{y * 720}" r="{720 * r / 2}" stroke="{color_rgb}" stroke-width="{line_width}" fill="{fill}" />'), collapse = "")
+
+  # Enclose circles in group
+  circle_svg <- xml2::read_xml(glue::glue("<g>{circle_text}</g>"))
+
+  # Add circle svg to file
+  xml2::xml_add_child(x1, circle_svg)
+
+  # write output file
+  safe_write(x1, output)
+
+
+  if (!("spiro" %in% class(output))) class(output) <- c("spiro", class(output))
+  if (openfile) output
 }

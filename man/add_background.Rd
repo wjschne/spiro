@@ -4,8 +4,13 @@
 \alias{add_background}
 \title{Add background color}
 \usage{
-add_background(input, color = "black", rounding = 0, openfile = TRUE,
-  output = input)
+add_background(
+  input,
+  color = "black",
+  rounding = 0,
+  openfile = TRUE,
+  output = input
+)
 }
 \arguments{
 \item{input}{File name of .svg file to input}
@@ -26,7 +31,9 @@ Add background color
 }
 \examples{
 library(spiro)
-library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
-    add_background(color = "black")
+spiro(
+  fixed_radius = 3,
+  cycling_radius = 1,
+  file = "add_background.svg") \%>\%
+  add_background(color = "black")
 }

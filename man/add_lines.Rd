@@ -4,8 +4,14 @@
 \alias{add_lines}
 \title{Add color to lines}
 \usage{
-add_lines(input, colors = "black", transparency = NA,
-  line_width = 0.5, openfile = TRUE, output = input)
+add_lines(
+  input,
+  colors = "black",
+  transparency = NA,
+  line_width = 0.5,
+  openfile = TRUE,
+  output = input
+)
 }
 \arguments{
 \item{input}{File name of .svg file to input}
@@ -26,7 +32,12 @@ Add color to lines
 }
 \examples{
 library(spiro)
-library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
-    add_background(color = "black")
+spiro(
+  fixed_radius = 3,
+  cycling_radius = 1,
+  file = "add_lines.svg"
+  ) \%>\%
+  add_lines(
+    colors = "firebrick",
+    line_width = 3)
 }

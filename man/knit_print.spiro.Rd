@@ -2,15 +2,14 @@
 % Please edit documentation in R/spirograph.R
 \name{knit_print.spiro}
 \alias{knit_print.spiro}
-\title{define a knit_print method for objects of the class spiro}
+\title{define a knit_print method for objects of the class spiro. It inserts the .svg file into the document with the knitr::include_graphics function}
 \usage{
-knit_print.spiro(file, ...)
+knit_print.spiro(x, ...)
 }
 \arguments{
-\item{file}{Name of the output file.}
-
-\item{...}{Parameters passed to knitr::include_graphics}
+\item{x}{Name of the output file.}
 }
 \description{
-define a knit_print method for objects of the class spiro
+define a knit_print method for objects of the class spiro. It inserts the .svg file into the document with the knitr::include_graphics function
 }
+\keyword{internal}

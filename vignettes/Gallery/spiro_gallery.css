@@ -1,0 +1,79 @@
+
+.caption {text-align:right;}
+
+body, h4{font-family: 'Cormorant', Palatino, 'Palatino Linotype', serif; font-size: 18pt;}
+
+
+.btn-group {visibility:hidden}
+
+h1, h2, h3, .h1, .h2, .h3 .author{
+  font-family:'Eagle Lake', Palatino, 'Palatino Linotype', serif; 
+  background: -webkit-linear-gradient(#666666, #222222);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: normal;
+}
+
+h1 span {
+  background: -webkit-linear-gradient(#666666, #222222);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: normal;
+}
+
+h1 {margin-top:100px; text-align:center; margin-bottom:-40px; font-size:40pt;}
+
+.title, .subtitle, .author {
+	clear:both;margin-top: 20px; text-align:center;margin-bottom: 20px;
+}
+
+h1.title{font-size:58.5pt}
+h4.author{font-size:20pt; margin-top:-10px; font-family:'Eagle Lake', Palatino, 'Palatino Linotype', serif; }
+h3.subtitle{font-size:25pt; margin-top:-25px;}
+blockquote{font-size:16pt}
+
+#a-re-introduction-to-spirographs h1{margin-top: 20px; text-align:center;margin-bottom: 20px;}
+
+button {font-family:'Fira Code'}
+
+a.demo_img {
+
+		width:500px;
+		position:relative;
+		line-height:25px;
+	}
+
+	a.demo_img>div {
+		position:absolute;
+		padding:0;
+		margin:0;
+		left: -10px; /* change this value to one that works best for you */
+		top: 20px; /* change this value to one that works best for you */
+		background: transparent url(/generator/show-clickable-imge-link-on-hover_files/arrow-down-grey.png) left 23px no-repeat;
+
+		opacity:0;
+		height: 0;
+		overflow: hidden;
+
+		/* Enable transitions */
+		/*-webkit-transition: all .3s ease .15s;
+		-moz-transition: all .3s ease .15s;
+		-o-transition: all .3s ease .15s;
+		-ms-transition: all .3s ease .15s;
+		transition: all .3s ease .15s;*/
+	}
+
+	a.demo_img>div img {
+display: block;
+width: 500px;
+	}
+	a.demo_img:hover>div {
+
+		opacity:1;
+		height: 500px;
+		padding: 8px;
+
+		z-index:1;
+	}
+
+p.caption {font-size: 16pt; font-style: italic}

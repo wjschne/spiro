@@ -2,11 +2,18 @@
 % Please edit documentation in R/spirograph.R
 \name{image_spin}
 \alias{image_spin}
-\title{Spin image}
+\title{Spin image. Resulting file best viewed in Google Chrome.}
 \usage{
-image_spin(input, rpm = 1, rotation_point = c(0.5, 0.5),
-  add_dot = FALSE, dot_color = "red", dot_size = 6,
-  openfile = TRUE, output = input)
+image_spin(
+  input,
+  rpm = 1,
+  rotation_point = c(0.5, 0.5),
+  add_dot = FALSE,
+  dot_color = "red",
+  dot_size = 6,
+  openfile = TRUE,
+  output = input
+)
 }
 \arguments{
 \item{input}{File name of .svg file to input}
@@ -29,11 +36,12 @@ image_spin(input, rpm = 1, rotation_point = c(0.5, 0.5),
 output name
 }
 \description{
-Spin image
+Spin image. Resulting file best viewed in Google Chrome.
 }
 \examples{
 library(spiro)
-library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
-    image_spin(rpm = 1)
+spiro(fixed_radius = 3,
+      cycling_radius = 1,
+      file = "image_spin.svg") \%>\%
+  image_spin(rpm = 1)
 }

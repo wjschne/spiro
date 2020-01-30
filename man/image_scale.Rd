@@ -23,7 +23,8 @@ Scale image
 }
 \examples{
 library(spiro)
-library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
-    image_scale(scale = 0.5)
+spiro(fixed_radius = 3,
+      cycling_radius = 1,
+      file = "image_scale.svg") \%>\%
+  image_scale(scale = 0.5)
 }

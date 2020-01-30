@@ -3,17 +3,29 @@
 
 # spiro <img src="man/figures/logo.svg" align="right" height=140/>
 
-The `spiro` package creates spirographs in the .svg file format. There
-are functions in `spiro` that transform and animate your spirographs
-after they have been created.
+[![CRAN
+status](https://www.r-pkg.org/badges/version/spiro)](https://cran.r-project.org/package=spiro)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Travis build
+status](https://travis-ci.org/wjschne/spiro.svg?branch=master)](https://travis-ci.org/wjschne/spiro)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/wjschne/spiro?branch=master&svg=true)](https://ci.appveyor.com/project/wjschne/spiro)
+
+The spiro package creates spirographs in the .svg file format. There are
+functions in spiro that transform and animate your spirographs after
+they have been created.
+
+  - [Tutorial](https://wjschne.github.io/spiro/articles/spirograph.html)
+  - [Function
+    References](https://wjschne.github.io/spiro/reference/index.html)
 
 ## Installation
 
 You can install spiro from github with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("wjschne/spirographer")
+# install.packages("remotes")
+remotes::install_github("wjschne/spiro")
 ```
 
 ## Example
@@ -29,4 +41,8 @@ spiro(
   file = "example.svg") 
 ```
 
-![](example.svg)<!-- -->
+![](man/figures/example.svg)<!-- -->
+
+Please note that the spiro project is released with a [Contributor Code
+of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you
+agree to abide by its terms.

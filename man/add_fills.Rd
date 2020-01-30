@@ -4,8 +4,14 @@
 \alias{add_fills}
 \title{Add fills to lines}
 \usage{
-add_fills(input, colors = "black", transparency = NA,
-  rule = c("evenodd", "winding"), openfile = TRUE, output = input)
+add_fills(
+  input,
+  colors = "black",
+  transparency = NA,
+  rule = c("evenodd", "winding"),
+  openfile = TRUE,
+  output = input
+)
 }
 \arguments{
 \item{input}{File name of .svg file to input}
@@ -26,7 +32,10 @@ Add fills to lines
 }
 \examples{
 library(spiro)
-library(magrittr)
-spiro(fixed_radius = 3, cycling_radius = 1) \%>\%
-    add_background(color = "black")
+spiro(
+ fixed_radius = 3,
+ cycling_radius = 1,
+ file = "add_fills.svg"
+ ) \%>\%
+ add_fills(colors = "black")
 }

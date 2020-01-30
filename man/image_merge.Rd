@@ -4,8 +4,13 @@
 \alias{image_merge}
 \title{Merge images}
 \usage{
-image_merge(input, output = NA, copies = 1, delete_input = FALSE,
-  openfile = TRUE)
+image_merge(
+  input,
+  output = NA,
+  copies = 1,
+  delete_input = TRUE,
+  openfile = TRUE
+)
 }
 \arguments{
 \item{input}{Vector of file names to merge}
@@ -26,9 +31,10 @@ Merge images
 }
 \examples{
 library(spiro)
-library(magrittr)
-c(spiro(fixed_radius = 3, cycling_radius = 1),
-  spiro(fixed_radius = 3, cycling_radius = 1,
-        rotation = pi, colors = "firebrick")) \%>\%
-  image_merge(output = "merged.svg")
+c(spiro(fixed_radius = 6, transparency = 0.5),
+  spiro(fixed_radius = 3, transparency = 0.5)
+) \%>\%
+  image_merge(
+    output = "image_merge.svg",
+    delete_input = TRUE)
 }

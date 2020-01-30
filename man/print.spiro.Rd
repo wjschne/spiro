@@ -2,13 +2,14 @@
 % Please edit documentation in R/spirograph.R
 \name{print.spiro}
 \alias{print.spiro}
-\title{Custom print function for spiro objects}
+\title{Custom print function for spiro objects. It opens the .svg file with your default svg viewer with the pander::openFileInOS function.}
 \usage{
-\method{print}{spiro}(file)
+\method{print}{spiro}(x, ...)
 }
 \arguments{
-\item{file}{Name of the output file.}
+\item{x}{Name of the output file.}
 }
 \description{
-Custom print function for spiro objects
+Custom print function for spiro objects. It opens the .svg file with your default svg viewer with the pander::openFileInOS function.
 }
+\keyword{internal}
