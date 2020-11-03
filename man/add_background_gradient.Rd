@@ -48,6 +48,7 @@ output name
 Add background color radial gradients
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(
    fixed_radius = 3,
@@ -55,4 +56,5 @@ spiro(
    file = "add_background_gradient.svg"
    ) \%>\%
    add_background_gradient(color = c("black","white"))
+   }
 }

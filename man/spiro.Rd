@@ -94,10 +94,12 @@ and can create svg animations of spirographs.'
 The `spiro` function by default returns an object of class spiro. This object contains the name of the file that `spiro` has created. Its print method opens the file in your computers default svg viewer. Google Chrome is the viewer on which best results will likely be seen. When used with knitr, object of class spiro will print via knitr::include_graphics()
 }
 \examples{
+\dontrun{
 spiro(
   fixed_radius = 3,
   cycling_radius = 1,
   file = "spiro.svg")
+  }
 }
 \author{
 W. Joel Schneider

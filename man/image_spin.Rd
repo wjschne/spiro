@@ -39,9 +39,11 @@ output name
 Spin image. Resulting file best viewed in Google Chrome.
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(fixed_radius = 3,
       cycling_radius = 1,
-      file = "image_spin.svg") \%>\%
+      file = "image_spin") \%>\%
   image_spin(rpm = 1)
+  }
 }

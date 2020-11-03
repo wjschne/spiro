@@ -36,6 +36,7 @@ file by default or tibble with data if savefile if FALSE
 Make string bezier
 }
 \examples{
+\dontrun{
 library(spiro)
 string_bezier(
    file = "string_bezier.svg",
@@ -45,4 +46,5 @@ string_bezier(
    n = 100,
    lwd = 0.3
    )
+   }
 }

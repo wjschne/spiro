@@ -1,6 +1,6 @@
 Package: spiro
 Title: Spirographs
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: 
     person(given = "W. Joel",
            family = "Schneider",
@@ -42,5 +42,5 @@ Suggests:
     covr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 Language: en-US

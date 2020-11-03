@@ -30,10 +30,12 @@ output name
 Add background color
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(
   fixed_radius = 3,
   cycling_radius = 1,
   file = "add_background.svg") \%>\%
   add_background(color = "black")
+  }
 }

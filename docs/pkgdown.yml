@@ -1,7 +1,8 @@
-pandoc: 2.9.1
-pkgdown: 1.4.1
+pandoc: 2.9.2.1
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  Gallery: Gallery/Gallery.html
-  spiro: HowToUse/spiro.html
+  Gallery/Gallery: Gallery.html
+  HowToUse/spiro: spiro.html
+last_built: 2020-11-03T18:22Z
 

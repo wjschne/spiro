@@ -22,9 +22,11 @@ output name
 Scale image
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(fixed_radius = 3,
       cycling_radius = 1,
-      file = "image_scale.svg") \%>\%
+      file = "image_scale") \%>\%
   image_scale(scale = 0.5)
+  }
 }

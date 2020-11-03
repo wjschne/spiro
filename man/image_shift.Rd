@@ -24,9 +24,11 @@ output name
 shift image
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(fixed_radius = 3,
       cycling_radius = 1,
       file = "image_shift.svg") \%>\%
   image_shift(x = 200, y = 200)
+  }
 }

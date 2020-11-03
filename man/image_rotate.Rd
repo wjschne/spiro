@@ -30,9 +30,11 @@ output name
 `image_rotate`
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(fixed_radius = 3,
       cycling_radius = 1,
       file = "image_rotate.svg") \%>\%
     image_rotate(degrees = 90)
+    }
 }

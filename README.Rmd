@@ -24,7 +24,8 @@ knitr::opts_chunk$set(
 
 The spiro package creates spirographs in the .svg file format. There are functions in spiro that transform and animate your spirographs after they have been created.
 
-* [Tutorial](https://wjschne.github.io/spiro/articles/spirograph.html)
+* [Tutorial](https://wjschne.github.io/spiro/articles/HowToUse/spiro.html)
+* [Gallery](https://wjschne.github.io/spiro/articles/Gallery/Gallery.html)
 * [Function References](https://wjschne.github.io/spiro/reference/index.html)
 
 

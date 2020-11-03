@@ -31,6 +31,7 @@ add_fills(
 Add fills to lines
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(
  fixed_radius = 3,
@@ -38,4 +39,5 @@ spiro(
  file = "add_fills.svg"
  ) \%>\%
  add_fills(colors = "black")
+ }
 }

@@ -42,6 +42,7 @@ output name
 Add a moving circle to paths. Resulting file best viewed in Google Chrome.
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(
  fixed_radius = 3,
@@ -49,4 +50,5 @@ spiro(
  file = "add_pathdot.svg"
  ) \%>\%
  add_pathdot(duration = 3)
+ }
 }

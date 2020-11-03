@@ -33,6 +33,7 @@ output name
 Animate image. Resulting file best viewed in Google Chrome.
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(fixed_radius = 3,
       cycling_radius = 1,
@@ -40,4 +41,5 @@ spiro(fixed_radius = 3,
    image_animate(attribute = "opacity",
                  duration = 2,
                  values = c(0.3,0.9,0.3))
+  }
 }

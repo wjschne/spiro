@@ -1,13 +1,15 @@
 ## Test environments
-* local Windows 10 install, R 3.5.1
-* ubuntu 14.04 (on travis-ci), R 3.5.1
+* local Windows 10 install, R 4.0.2
+* ubuntu 14.04 (on travis-ci), 4.0.2
 * win-builder (devel and release)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+Duration: 22.3s
 
-* This is a new release.
+0 errors v | 0 warnings v | 0 notes v
+
+R CMD check succeeded
 
 ## Responding to concerns raised in previous submission attempt
 

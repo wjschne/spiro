@@ -30,6 +30,7 @@ output name
 Merge images
 }
 \examples{
+\dontrun{
 library(spiro)
 c(spiro(fixed_radius = 6, transparency = 0.5),
   spiro(fixed_radius = 3, transparency = 0.5)
@@ -37,4 +38,5 @@ c(spiro(fixed_radius = 6, transparency = 0.5),
   image_merge(
     output = "image_merge.svg",
     delete_input = TRUE)
+    }
 }

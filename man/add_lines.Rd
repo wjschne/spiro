@@ -31,6 +31,7 @@ add_lines(
 Add color to lines
 }
 \examples{
+\dontrun{
 library(spiro)
 spiro(
   fixed_radius = 3,
@@ -40,4 +41,5 @@ spiro(
   add_lines(
     colors = "firebrick",
     line_width = 3)
+    }
 }

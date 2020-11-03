@@ -42,9 +42,11 @@ output name
 Add a circle to the image
 }
 \examples{
+\dontrun{
 spiro(fixed_radius = 3,
       cycling_radius = 1,
       file = "add_circle_example.svg",
       colors = "red") \%>\%
   add_circle(r = 0.308, fill = "white", color = "white")
+  }
 }

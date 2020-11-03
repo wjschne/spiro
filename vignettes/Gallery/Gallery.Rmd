@@ -129,7 +129,7 @@ ggplot(data = d_circle) +
 
 Although I still like making spirographs by hand, I wanted to extend what could be done with the traditional spirograph. I wrote the [spiro package](https://wjschne.github.io/spiro/articles/HowToUse/spirograph.html) in R to make images that would be impossible to create on paper.
 
-I cannot usually predict what will happen when I play with the three primary numbers of the equation. However, once a certain combination strikes me as interesting, I play with cutting it into different color segments to see if something interesting happens. Sometimes I merge many spirographs and spin them to see if the emerging patterns are pleasing. 
+I cannot usually predict what will happen when I play with the three primary numbers of the equation. However, once a certain combination strikes me as interesting, I play with cutting it into different color segments to see if something of further interest happens. Sometimes I merge many spirographs and spin them to see if the emerging patterns are pleasing. 
 
 Here I demonstrate what can be done with [spiro package](https://wjschne.github.io/spiro/articles/HowToUse/spirograph.html). I would love to see what you can do with it.
 
@@ -1163,6 +1163,86 @@ tibble(colors = c("#004D47", "#128277")) %>%
 cat(read_file("colliding_scopes.svg"))
 ```
 
+# <span>The Increasing Returns</span><br><span>of Having Travelled</span> 
+
+```{r, eval=remake}
+n <- 60
+spiro(3, 1, 1, 
+      color_groups = 6, 
+      colors = lacroix_palettes$Tangerine[1,, drop = T] %>% scales::alpha(0.7), 
+      file = "delta.svg") %>% 
+  image_merge(copies = n, 
+              output = "the_increasing_returns_of_having_travelled.svg") %>% 
+  image_scale(seq(0.0001,1, length.out = n) ^ (1/1.25)) %>% 
+  image_rotate(seq(0,360 * 5.65, length.out = n)) %>% 
+  spiro::add_lines(input = ., colors = "gray10") %>% 
+  add_background_gradient(colors = c("gray30", "gray5","gray30","gray5"))
+
+
+```
+
+```{r, echo = F, fig.width=8, fig.height=8, out.width='100%', out.height='100%', echo = F, results='asis'}
+knitr::include_graphics("the_increasing_returns_of_having_travelled.svg")
+```
+
+
+# <span>Mining Old Errors</span><br><span>for New Truths</span> 
+
+```{r, eval=remake}
+my_palette <-
+  scales::colour_ramp(c(
+    rgb(.74, .19, .22, .9),
+    rgb(.86, .76, .22, .2),
+    rgb(.91, .92, .92, .9),
+    rgb(.11, .22, .22, .95),
+    rgb(.22, .22, .22, .1),
+    rgb(.24, .22, .71, .9)
+  ))
+spiro(
+  fixed_radius = 226,
+  pen_radius = 235,
+  cycling_radius = 15,
+  points_per_polygon = 10,
+  file = "old_errors.svg",
+  color_groups = 40,
+  color_cycles = 61,
+  colors = my_palette(seq(0, 1, length.out = 40)) 
+) %>% 
+  add_background_gradient(colors = c("gray20", "white", "gray90", "gray30","gray5"), 
+                          stops = c(0, .1, 0.6, .65, 1))
+```
+
+```{r, echo = F, fig.width=8, fig.height=8, out.width='100%', out.height='100%', echo = F, results='asis'}
+knitr::include_graphics("old_errors.svg")
+```
+
+# Ñañaras
+
+```{r, eval=remake}
+my_colors <- c("#969594FF","#00000000","#00000000",
+               "#F9F8F7FF","#00000000","#00000000",
+               "#585756FF","#00000000","#00000000",
+               "#D0CFCDFF","#00000000","#00000000","#171615FF")
+
+tibble(fixed_radius = 541,
+       cycling_radius = 601,
+       pen_radius = 191, 
+       windings = 200,
+       color_groups = 20,
+       points_per_polygon = 40 * 19:23) %>% 
+  pmap(spiro, colors = my_colors) %>% 
+  image_merge(output = "ñañaras.svg") %>% 
+  image_scale(c(1.07, .56, .29, 0.15, 0.075)) %>% 
+  image_rotate(degrees = seq(0, 80, 20)) %>% 
+  add_background("black")
+  add_background_gradient(colors = c("white", "dodgerblue4"))
+```
+
+```{r, echo = F, fig.width=8, fig.height=8, out.width='100%', out.height='100%', echo = F, results='asis'}
+knitr::include_graphics("ñañaras.svg")
+```
+
+
 # The Past Was Never Simple
 
 ```{r, eval=remake}
@@ -1201,8 +1281,6 @@ knitr::include_graphics("the_past_was_never_simple.svg")
 
 # Portal to the 80s
 
-
-
 ```{r, eval=remake}
 string_bezier(
   file = "portal_to_the_80s.svg",
@@ -1220,7 +1298,7 @@ knitr::include_graphics("portal_to_the_80s.svg")
 ```
 
 
-# Superhero
+# Supervillains' Superior Sense of Fashion 
 
 ```{r, eval=remake}
 library(ggforce)

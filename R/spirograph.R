@@ -30,10 +30,12 @@
 #' @importFrom rlang .data
 #' @return object of class spiro, which contains the file name. If savefile = FALSE, will return a tibble with raw data.
 #' @examples
+#' \dontrun{
 #' spiro(
 #'   fixed_radius = 3,
 #'   cycling_radius = 1,
 #'   file = "spiro.svg")
+#'   }
 #' @export
 spiro <- function(
                   fixed_radius = 3,
@@ -103,6 +105,7 @@ spiro <- function(
       colors <- paletteer::paletteer_c(
         palette = paste0(dplyr::pull(p, .data$package),"::",dplyr::pull(p, .data$palette)),
         n = color_groups)
+      print(colors)
     }
   }
 
@@ -303,7 +306,7 @@ spiro <- function(
       file
     }
   } else {
-    # Plot spirogrpah and return raw data----
+    # Plot spirograph and return raw data----
     graphics::plot.new()
     graphics::par(pty = "s", mar = rep(0, 4), ...)
     xrange <- range(d[, 1], na.rm = TRUE)
@@ -338,11 +341,13 @@ spiro <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
-#'       file = "image_spin.svg") %>%
+#'       file = "image_spin") %>%
 #'   image_spin(rpm = 1)
+#'   }
 #' @export
 image_spin <- function(
                        input,
@@ -437,11 +442,13 @@ r = "{dot_size}"'
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
-#'       file = "image_scale.svg") %>%
+#'       file = "image_scale") %>%
 #'   image_scale(scale = 0.5)
+#'   }
 #' @export
 image_scale <- function(
                         input,
@@ -492,11 +499,13 @@ image_scale <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "image_shift.svg") %>%
 #'   image_shift(x = 200, y = 200)
+#'   }
 #' @export
 image_shift <- function(
                         input,
@@ -554,11 +563,13 @@ image_shift <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "image_rotate.svg") %>%
 #'     image_rotate(degrees = 90)
+#'     }
 #' @export
 image_rotate <- function(
                          input,
@@ -608,6 +619,7 @@ image_rotate <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' c(spiro(fixed_radius = 6, transparency = 0.5),
 #'   spiro(fixed_radius = 3, transparency = 0.5)
@@ -615,6 +627,7 @@ image_rotate <- function(
 #'   image_merge(
 #'     output = "image_merge.svg",
 #'     delete_input = TRUE)
+#'     }
 #' @export
 image_merge <- function(
                         input,
@@ -662,6 +675,7 @@ image_merge <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
@@ -669,6 +683,7 @@ image_merge <- function(
 #'    image_animate(attribute = "opacity",
 #'                  duration = 2,
 #'                  values = c(0.3,0.9,0.3))
+#'   }
 #' @export
 image_animate <- function(
                           input,
@@ -709,12 +724,14 @@ image_animate <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(
 #'   fixed_radius = 3,
 #'   cycling_radius = 1,
 #'   file = "add_background.svg") %>%
 #'   add_background(color = "black")
+#'   }
 #' @export
 add_background <- function(
                            input,
@@ -782,6 +799,7 @@ add_background <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(
 #'    fixed_radius = 3,
@@ -789,6 +807,7 @@ add_background <- function(
 #'    file = "add_background_gradient.svg"
 #'    ) %>%
 #'    add_background_gradient(color = c("black","white"))
+#'    }
 #' @export
 add_background_gradient <- function(
                                     input,
@@ -880,6 +899,7 @@ add_background_gradient <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(
 #'   fixed_radius = 3,
@@ -889,6 +909,7 @@ add_background_gradient <- function(
 #'   add_lines(
 #'     colors = "firebrick",
 #'     line_width = 3)
+#'     }
 #' @export
 add_lines <- function(
                       input,
@@ -952,6 +973,7 @@ add_lines <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(
 #'  fixed_radius = 3,
@@ -959,6 +981,7 @@ add_lines <- function(
 #'  file = "add_fills.svg"
 #'  ) %>%
 #'  add_fills(colors = "black")
+#'  }
 #' @export
 add_fills <- function(
                       input,
@@ -1028,6 +1051,7 @@ add_fills <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(
 #'  fixed_radius = 3,
@@ -1035,6 +1059,7 @@ add_fills <- function(
 #'  file = "add_pathdot.svg"
 #'  ) %>%
 #'  add_pathdot(duration = 3)
+#'  }
 #' @export
 add_pathdot <- function(
                         input,
@@ -1108,11 +1133,13 @@ add_pathdot <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "image_spin.svg") %>%
 #'   image_spin(rpm = 1)
+#'   }
 #' @export
 add_restart <- function(
   input,
@@ -1227,6 +1254,7 @@ knit_print.spiro <- function(x, ...) {
 #' @importFrom rlang .data
 #' @return file by default or tibble with data if savefile if FALSE
 #' @examples
+#' \dontrun{
 #' library(spiro)
 #' string_bezier(
 #'    file = "string_bezier.svg",
@@ -1236,6 +1264,7 @@ knit_print.spiro <- function(x, ...) {
 #'    n = 100,
 #'    lwd = 0.3
 #'    )
+#'    }
 #' @export
 string_bezier <- function(
                           file = "bezier.svg",
@@ -1376,11 +1405,13 @@ spiro_name <- function(file) {
 #' @return output name
 #' @export
 #' @examples
+#' \dontrun{
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "add_circle_example.svg",
 #'       colors = "red") %>%
 #'   add_circle(r = 0.308, fill = "white", color = "white")
+#'   }
 add_circle <- function(
   input,
   x = 0.5,

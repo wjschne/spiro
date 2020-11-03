@@ -7,7 +7,7 @@ body, h4{font-family: 'Cormorant', Palatino, 'Palatino Linotype', serif; font-si
 .btn-group {visibility:hidden}
 
 h1, h2, h3, .h1, .h2, .h3 .author{
-  font-family:'Eagle Lake', Palatino, 'Palatino Linotype', serif; 
+  font-family:'Eagle Lake', Palatino, 'Palatino Linotype', serif;
   background: -webkit-linear-gradient(#666666, #222222);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

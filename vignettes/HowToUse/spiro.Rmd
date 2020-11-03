@@ -1,10 +1,14 @@
 ---
-title: 'Get Started'
+title: 'Making Spirographs with spiro'
 author: "W. Joel Schneider"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
     css: VignetteStyle.css
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Making Spirographs with spiro}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}

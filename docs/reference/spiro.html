@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -48,8 +52,7 @@
 <meta property="og:description" content="The spiro package creates spirographs in the svg format
 and can create svg animations of spirographs.'
 `spiro` creates a spirograph." />
-<meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="/logo.svg" />
 
 
 
@@ -67,7 +70,7 @@ and can create svg animations of spirographs.'
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -81,7 +84,7 @@ and can create svg animations of spirographs.'
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spiro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -107,7 +110,7 @@ and can create svg animations of spirographs.'
       <a href="../articles/Gallery/Gallery.html">Schnirographs</a>
     </li>
     <li>
-      <a href="../articles/HowToUse/spiro.html">Get Started</a>
+      <a href="../articles/HowToUse/spiro.html">Making Spirographs with spiro</a>
     </li>
   </ul>
 </li>
@@ -117,7 +120,7 @@ and can create svg animations of spirographs.'
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/wjschne/spiro">
+  <a href="https://github.com/wjschne/spiro/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -146,32 +149,32 @@ and can create svg animations of spirographs.'</p>
 <p>`spiro` creates a spirograph.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>spiro</span>(
-  <span class='kw'>fixed_radius</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>cycling_radius</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>pen_radius</span> <span class='kw'>=</span> <span class='no'>cycling_radius</span>,
-  <span class='kw'>windings</span> <span class='kw'>=</span> <span class='no'>cycling_radius</span>,
-  <span class='kw'>color_groups</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>transparency</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>color_cycles</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>color_sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>draw_fills</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>line_width</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>origin_x</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>origin_y</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rotation</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>start_angle</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>points_per_polygon</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fl'>1000</span> * <span class='no'>windings</span>), <span class='fl'>0</span>),
-  <span class='kw'>rule</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"evenodd"</span>, <span class='st'>"winding"</span>),
-  <span class='kw'>openfile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>end_at_beginning</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>savefile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>file</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>spiro</span><span class='op'>(</span>
+  fixed_radius <span class='op'>=</span> <span class='fl'>3</span>,
+  cycling_radius <span class='op'>=</span> <span class='fl'>1</span>,
+  pen_radius <span class='op'>=</span> <span class='va'>cycling_radius</span>,
+  windings <span class='op'>=</span> <span class='va'>cycling_radius</span>,
+  color_groups <span class='op'>=</span> <span class='fl'>1</span>,
+  colors <span class='op'>=</span> <span class='cn'>NA</span>,
+  transparency <span class='op'>=</span> <span class='cn'>NA</span>,
+  color_cycles <span class='op'>=</span> <span class='fl'>1</span>,
+  color_sort <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  draw_fills <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  line_width <span class='op'>=</span> <span class='fl'>1</span>,
+  origin_x <span class='op'>=</span> <span class='fl'>0</span>,
+  origin_y <span class='op'>=</span> <span class='fl'>0</span>,
+  xlim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ylim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rotation <span class='op'>=</span> <span class='fl'>0</span>,
+  start_angle <span class='op'>=</span> <span class='fl'>0</span>,
+  points_per_polygon <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fl'>1000</span> <span class='op'>*</span> <span class='va'>windings</span><span class='op'>)</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  rule <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"evenodd"</span>, <span class='st'>"winding"</span><span class='op'>)</span>,
+  openfile <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  end_at_beginning <span class='op'>=</span> <span class='cn'>F</span>,
+  savefile <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  file <span class='op'>=</span> <span class='cn'>NA</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -280,25 +283,24 @@ and can create svg animations of spirographs.'</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The `spiro` function by default returns an object of class spiro. This object contains the name of the file that `spiro` has created. Its print method opens the file in your computers default svg viewer. Google Chrome is the viewer on which best results will likely be seen. When used with knitr, object of class spiro will print via knitr::include_graphics()</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='fu'>spiro</span>(
-  <span class='kw'>fixed_radius</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>cycling_radius</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"spiro.svg"</span>)</pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
     <p>W. Joel Schneider
 #'</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
+<span class='fu'>spiro</span><span class='op'>(</span>
+  fixed_radius <span class='op'>=</span> <span class='fl'>3</span>,
+  cycling_radius <span class='op'>=</span> <span class='fl'>1</span>,
+  file <span class='op'>=</span> <span class='st'>"spiro.svg"</span><span class='op'>)</span>
+  <span class='co'># }</span>
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -309,7 +311,7 @@ and can create svg animations of spirographs.'</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
