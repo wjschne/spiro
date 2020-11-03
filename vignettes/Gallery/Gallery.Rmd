@@ -723,7 +723,7 @@ spiro(
 knitr::include_graphics("maelstrom_sunset.svg")
 ```
 
-# D'Ya Wanna Rollerskate?
+# D'Ya Wanna Roller Skate?
 
 ```{r, eval=remake}
 k <- 40
@@ -1163,7 +1163,7 @@ tibble(colors = c("#004D47", "#128277")) %>%
 cat(read_file("colliding_scopes.svg"))
 ```
 
-# <span>The Increasing Returns</span><br><span>of Having Travelled</span> 
+# <span>The Increasing Returns</span><br><span>of Having Traveled</span> 
 
 ```{r, eval=remake}
 n <- 60
