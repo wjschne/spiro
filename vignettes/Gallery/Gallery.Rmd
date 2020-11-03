@@ -1231,15 +1231,14 @@ tibble(fixed_radius = 541,
        color_groups = 20,
        points_per_polygon = 40 * 19:23) %>% 
   pmap(spiro, colors = my_colors) %>% 
-  image_merge(output = "ñañaras.svg") %>% 
+  image_merge(output = "nanaras.svg") %>% 
   image_scale(c(1.07, .56, .29, 0.15, 0.075)) %>% 
   image_rotate(degrees = seq(0, 80, 20)) %>% 
   add_background("black")
-  add_background_gradient(colors = c("white", "dodgerblue4"))
 ```
 
 ```{r, echo = F, fig.width=8, fig.height=8, out.width='100%', out.height='100%', echo = F, results='asis'}
-knitr::include_graphics("ñañaras.svg")
+knitr::include_graphics("nanaras.svg")
 ```
 
 
