@@ -36,6 +36,8 @@ blockquote{font-size:16pt}
 
 button {font-family:'Fira Code'}
 
+a.anchor-section::before {content: '';}
+
 a.demo_img {
 
 		width:500px;

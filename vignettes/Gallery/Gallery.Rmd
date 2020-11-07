@@ -648,7 +648,6 @@ k <- 80
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F,results='asis', eval=F}
 cat(readr::read_file("counterspin_triangles.svg"))
 ```
-
 # Illusively Elusive Allusion
 
 ```{r, eval=remake}
@@ -678,6 +677,7 @@ k <- 80
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F,results='asis'}
 cat(readr::read_file("illusively_elusive_allusion.svg"))
 ```
+
 
 # Blurry Metal Eye
 
@@ -878,6 +878,38 @@ spiro(
 knitr::include_graphics("hawaiian_snow_salad.svg")
 ```
 
+# <span>The Flowglow of</span><br><span>a Simple Insight</span>
+
+```{r, eval=remake}
+l <- 27
+  crossing(
+    fixed_radius = 17,
+    cycling_radius = 1:9,
+    pen_radius = 11
+  ) %>%
+    mutate(colors = LaCroixColoR::lacroix_palette("Coconut", n =  9) %>% scales::alpha(0.9)) %>%
+    pmap(
+      spiro,
+      draw_fills = T,
+      xlim = c(-l, l),
+      ylim = c(-l, l),
+      color_cycles = 17 * 6,
+      points_per_polygon = 500
+    ) %>%
+    image_merge(output = "foreglow.svg") %>%
+    add_background_gradient(
+      colors = rep(
+        LaCroixColoR::lacroix_palette("Coconut", 9) %>% colorspace::darken(.1),
+        3
+      ),
+      stops = c(0.7 * seq(0, 1, length.out = l - 3), 0.78 , 0.88, 0.98)
+    )
+```
+
+```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F}
+knitr::include_graphics("foreglow.svg")
+```
+
 # Yes You May
 
 ```{r, eval=remake}
@@ -1014,7 +1046,32 @@ c(
 knitr::include_graphics("restoration_agreement.svg")
 ```
 
+# Reconcilation Reset 490
 
+```{r, eval=remake}
+n <- 36
+spiro(fixed_radius = 3,
+      cycling_radius = 1, 
+      file = "reconciliation491.svg", 
+      colors = "#5262CA10", 
+      points_per_polygon = 300) %>% 
+  image_scale(scale = 0.7) %>% 
+  image_merge(copies = n, 
+              output = "reconciliation491.svg") %>% 
+  add_lines(colors = "#5262CAAA", line_width = 0.5) %>% 
+  image_spin(rpm = seq(1,n) / 12, 
+             rotation_point = c(0.6135,0.6135)) %>% 
+  image_shift(x = -81.5, y = 81.5) %>%
+  add_restart(color = colorspace::lighten("#5262CA", .5), 
+              fill = colorspace::darken("#5262CA", .85)) %>% 
+  add_background_gradient(colors = map(c(0.98, 0.98, 0.95, 0.8), 
+                                       colorspace::darken, 
+                                       col = "#5262CA")) 
+```
+
+```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F,results='asis'}
+cat(readr::read_file("reconciliation491.svg"))
+```
 
 # Convoluted Candor
 
@@ -1171,7 +1228,8 @@ cat(read_file("colliding_scopes.svg"))
 n <- 60
 spiro(3, 1, 1, 
       color_groups = 6, 
-      colors = lacroix_palettes$Tangerine[1,, drop = T] %>% scales::alpha(0.7), 
+      colors =  LaCroixColoR::lacroix_palettes$Tangerine[1,, drop = T] %>% 
+        scales::alpha(0.7), 
       file = "delta.svg") %>% 
   image_merge(copies = n, 
               output = "the_increasing_returns_of_having_travelled.svg") %>% 
@@ -1299,7 +1357,7 @@ knitr::include_graphics("portal_to_the_80s.svg")
 ```
 
 
-# Supervillains' Superior Sense of Fashion 
+# <span>Supervillains' Superior</span><br><span>Sense of Fashion</span>
 
 ```{r, eval=remake}
 library(ggforce)
