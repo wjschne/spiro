@@ -1,11 +1,11 @@
 ## Test environments
-* local Windows 10 install, R 4.0.2
-* ubuntu 14.04 (on travis-ci), 4.0.2
+* local Windows 10 install, R 4.0.3
+* ubuntu 14.04 (on travis-ci), R 4.0.3
 * win-builder (devel and release)
 
 ## R CMD check results
 
-Duration: 22.3s
+Duration: 29.1s
 
 0 errors v | 0 warnings v | 0 notes v
 
@@ -13,5 +13,4 @@ R CMD check succeeded
 
 ## Responding to concerns raised in previous submission attempt
 
-* The Title field was shortened to "Spirographs" as suggested.
-* The name of the package was removed from the Description field. As suggested, an explanation of what spirographs are was added instead.
+* Fixed urls in Code of Conduct page

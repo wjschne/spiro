@@ -2,6 +2,8 @@
 title: "Schnirographs"
 subtitle: "Three Numbers and One Equation"
 author: "by W. Joel Schneider"
+pkgdown:
+  as_is: true
 output: 
   html_document: 
     code_folding: hide

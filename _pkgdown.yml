@@ -7,4 +7,6 @@ figures:
   fig.height: ~
   fig.retina: 2
   fig.asp: 1.618
-
+template:
+  params:
+    bootswatch: spacelab

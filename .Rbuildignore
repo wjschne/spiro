@@ -18,3 +18,4 @@
 ^vignettes$
 
 ^vignettes/Schnirograph\.Rmd$
+^CRAN-RELEASE$
