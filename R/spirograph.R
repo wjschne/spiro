@@ -465,6 +465,11 @@ image_scale <- function(
     ))
   }
 
+  fn <- stringr::str_remove(as.character(input),"\\.svg")
+
+  start_circle <- paste0(fn,"_start")
+  stop_circle <- paste0(fn,"_stop")
+
   x1 <- safe_read(input)
   g1 <- xml2::xml_find_all(x1, "//d1:g")
 
@@ -1119,7 +1124,7 @@ add_pathdot <- function(
 }
 
 
-#' Spin image. Resulting file best viewed in Google Chrome.
+#' Add start and stop animation buttons to image.
 #' @param input File name of .svg file to input
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @param location a vector of coordinates for the start button

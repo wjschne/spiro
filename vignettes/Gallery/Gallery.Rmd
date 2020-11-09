@@ -158,7 +158,7 @@ spiro(
 knitr::include_graphics("viridis_weave.svg")
 ```
 
-# I Saw Your Movie
+# Was It This Obvious All Along?
 
 ```{r, eval=remake}
 tibble::tibble(

@@ -2,7 +2,7 @@
 % Please edit documentation in R/spirograph.R
 \name{add_restart}
 \alias{add_restart}
-\title{Spin image. Resulting file best viewed in Google Chrome.}
+\title{Add start and stop animation buttons to image.}
 \usage{
 add_restart(
   input,
@@ -45,7 +45,7 @@ add_restart(
 output name
 }
 \description{
-Spin image. Resulting file best viewed in Google Chrome.
+Add start and stop animation buttons to image.
 }
 \examples{
 \dontrun{
