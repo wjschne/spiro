@@ -22,11 +22,11 @@ output name
 Scale image
 }
 \examples{
-\dontrun{
+\dontshow{.old_wd <- setwd(tempdir())}
 library(spiro)
 spiro(fixed_radius = 3,
       cycling_radius = 1,
       file = "image_scale") \%>\%
   image_scale(scale = 0.5)
-  }
+\dontshow{setwd(.old_wd)}
 }

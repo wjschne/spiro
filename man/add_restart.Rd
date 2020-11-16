@@ -48,11 +48,11 @@ output name
 Add start and stop animation buttons to image.
 }
 \examples{
-\dontrun{
+\dontshow{.old_wd <- setwd(tempdir())}
 library(spiro)
 spiro(fixed_radius = 3,
       cycling_radius = 1,
       file = "image_spin.svg") \%>\%
   image_spin(rpm = 1)
-  }
+\dontshow{setwd(.old_wd)}
 }

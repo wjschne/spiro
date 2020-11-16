@@ -31,7 +31,7 @@ add_lines(
 Add color to lines
 }
 \examples{
-\dontrun{
+\dontshow{.old_wd <- setwd(tempdir())}
 library(spiro)
 spiro(
   fixed_radius = 3,
@@ -41,5 +41,5 @@ spiro(
   add_lines(
     colors = "firebrick",
     line_width = 3)
-    }
+\dontshow{setwd(.old_wd)}
 }

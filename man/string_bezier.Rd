@@ -36,7 +36,7 @@ file by default or tibble with data if savefile if FALSE
 Make string bezier
 }
 \examples{
-\dontrun{
+\dontshow{.old_wd <- setwd(tempdir())}
 library(spiro)
 string_bezier(
    file = "string_bezier.svg",
@@ -46,5 +46,5 @@ string_bezier(
    n = 100,
    lwd = 0.3
    )
-   }
+\dontshow{setwd(.old_wd)}
 }

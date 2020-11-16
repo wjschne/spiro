@@ -30,12 +30,12 @@ output name
 Add background color
 }
 \examples{
-\dontrun{
+\dontshow{.old_wd <- setwd(tempdir())}
 library(spiro)
 spiro(
   fixed_radius = 3,
   cycling_radius = 1,
   file = "add_background.svg") \%>\%
   add_background(color = "black")
-  }
+\dontshow{setwd(.old_wd)}
 }

@@ -48,7 +48,7 @@ output name
 Add background color radial gradients
 }
 \examples{
-\dontrun{
+\dontshow{.old_wd <- setwd(tempdir())}
 library(spiro)
 spiro(
    fixed_radius = 3,
@@ -56,5 +56,5 @@ spiro(
    file = "add_background_gradient.svg"
    ) \%>\%
    add_background_gradient(color = c("black","white"))
-   }
+\dontshow{setwd(.old_wd)}
 }

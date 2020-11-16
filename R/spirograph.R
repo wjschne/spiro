@@ -30,12 +30,13 @@
 #' @importFrom rlang .data
 #' @return object of class spiro, which contains the file name. If savefile = FALSE, will return a tibble with raw data.
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
+#' library(spiro)
 #' spiro(
 #'   fixed_radius = 3,
 #'   cycling_radius = 1,
 #'   file = "spiro.svg")
-#'   }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 spiro <- function(
                   fixed_radius = 3,
@@ -246,6 +247,9 @@ spiro <- function(
       bg = NA
     )
     graphics::plot.new()
+    # Restore par after exiting function
+    oldpar <- graphics::par(no.readonly = TRUE)
+    on.exit(graphics::par(oldpar))
     # Set margins to 0
     graphics::par(mar = rep(0, 4), ...)
 
@@ -308,6 +312,9 @@ spiro <- function(
   } else {
     # Plot spirograph and return raw data----
     graphics::plot.new()
+    # Restore par after exiting function
+    oldpar <- graphics::par(no.readonly = TRUE)
+    on.exit(graphics::par(oldpar))
     graphics::par(pty = "s", mar = rep(0, 4), ...)
     xrange <- range(d[, 1], na.rm = TRUE)
     yrange <- range(d[, 2], na.rm = TRUE)
@@ -341,13 +348,13 @@ spiro <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "image_spin") %>%
 #'   image_spin(rpm = 1)
-#'   }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 image_spin <- function(
                        input,
@@ -442,13 +449,13 @@ r = "{dot_size}"'
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "image_scale") %>%
 #'   image_scale(scale = 0.5)
-#'   }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 image_scale <- function(
                         input,
@@ -504,13 +511,13 @@ image_scale <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "image_shift.svg") %>%
 #'   image_shift(x = 200, y = 200)
-#'   }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 image_shift <- function(
                         input,
@@ -568,13 +575,13 @@ image_shift <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "image_rotate.svg") %>%
 #'     image_rotate(degrees = 90)
-#'     }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 image_rotate <- function(
                          input,
@@ -624,7 +631,7 @@ image_rotate <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' c(spiro(fixed_radius = 6, transparency = 0.5),
 #'   spiro(fixed_radius = 3, transparency = 0.5)
@@ -632,7 +639,7 @@ image_rotate <- function(
 #'   image_merge(
 #'     output = "image_merge.svg",
 #'     delete_input = TRUE)
-#'     }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 image_merge <- function(
                         input,
@@ -680,7 +687,7 @@ image_merge <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
@@ -688,7 +695,7 @@ image_merge <- function(
 #'    image_animate(attribute = "opacity",
 #'                  duration = 2,
 #'                  values = c(0.3,0.9,0.3))
-#'   }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 image_animate <- function(
                           input,
@@ -729,14 +736,14 @@ image_animate <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(
 #'   fixed_radius = 3,
 #'   cycling_radius = 1,
 #'   file = "add_background.svg") %>%
 #'   add_background(color = "black")
-#'   }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 add_background <- function(
                            input,
@@ -804,7 +811,7 @@ add_background <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(
 #'    fixed_radius = 3,
@@ -812,7 +819,7 @@ add_background <- function(
 #'    file = "add_background_gradient.svg"
 #'    ) %>%
 #'    add_background_gradient(color = c("black","white"))
-#'    }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 add_background_gradient <- function(
                                     input,
@@ -904,7 +911,7 @@ add_background_gradient <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(
 #'   fixed_radius = 3,
@@ -914,7 +921,7 @@ add_background_gradient <- function(
 #'   add_lines(
 #'     colors = "firebrick",
 #'     line_width = 3)
-#'     }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 add_lines <- function(
                       input,
@@ -978,7 +985,7 @@ add_lines <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(
 #'  fixed_radius = 3,
@@ -986,7 +993,7 @@ add_lines <- function(
 #'  file = "add_fills.svg"
 #'  ) %>%
 #'  add_fills(colors = "black")
-#'  }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 add_fills <- function(
                       input,
@@ -1056,7 +1063,7 @@ add_fills <- function(
 #' @param output File name of .svg file to output. Default is to overwrite the input file.
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(
 #'  fixed_radius = 3,
@@ -1064,7 +1071,7 @@ add_fills <- function(
 #'  file = "add_pathdot.svg"
 #'  ) %>%
 #'  add_pathdot(duration = 3)
-#'  }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 add_pathdot <- function(
                         input,
@@ -1138,13 +1145,13 @@ add_pathdot <- function(
 #' @param openfile Open file in default program for .svg format. Defaults to FALSE.
 #' @return output name
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "image_spin.svg") %>%
 #'   image_spin(rpm = 1)
-#'   }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 add_restart <- function(
   input,
@@ -1259,7 +1266,7 @@ knit_print.spiro <- function(x, ...) {
 #' @importFrom rlang .data
 #' @return file by default or tibble with data if savefile if FALSE
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' library(spiro)
 #' string_bezier(
 #'    file = "string_bezier.svg",
@@ -1269,7 +1276,7 @@ knit_print.spiro <- function(x, ...) {
 #'    n = 100,
 #'    lwd = 0.3
 #'    )
-#'    }
+#' \dontshow{setwd(.old_wd)}
 #' @export
 string_bezier <- function(
                           file = "bezier.svg",
@@ -1315,6 +1322,9 @@ string_bezier <- function(
     bg = NA
   )
   graphics::plot.new()
+  # Restore par after exiting function
+  oldpar <- graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(oldpar))
   graphics::par(mar = rep(0, 4))
 
   graphics::plot.window(
@@ -1410,13 +1420,13 @@ spiro_name <- function(file) {
 #' @return output name
 #' @export
 #' @examples
-#' \dontrun{
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' spiro(fixed_radius = 3,
 #'       cycling_radius = 1,
 #'       file = "add_circle_example.svg",
 #'       colors = "red") %>%
 #'   add_circle(r = 0.308, fill = "white", color = "white")
-#'   }
+#' \dontshow{setwd(.old_wd)}
 add_circle <- function(
   input,
   x = 0.5,
