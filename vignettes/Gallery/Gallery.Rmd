@@ -878,7 +878,7 @@ spiro(
 knitr::include_graphics("hawaiian_snow_salad.svg")
 ```
 
-# <span>The Flowglow of</span><br><span>a Simple Insight</span>
+# <span>The Foreglow of</span><br><span>a Simple Insight</span>
 
 ```{r, eval=remake}
 l <- 27
@@ -1046,7 +1046,7 @@ c(
 knitr::include_graphics("restoration_agreement.svg")
 ```
 
-# Reconcilation Reset 490
+# Reconciliation Reset 490
 
 ```{r, eval=remake}
 n <- 36
