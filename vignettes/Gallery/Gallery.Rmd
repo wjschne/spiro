@@ -1,5 +1,5 @@
 ---
-title: "Schnirographs"
+title: "Schn&#299;rographs"
 subtitle: "Three Numbers and One Equation"
 author: "by W. Joel Schneider"
 pkgdown:
@@ -158,53 +158,7 @@ spiro(
 knitr::include_graphics("viridis_weave.svg")
 ```
 
-# Was It This Obvious All Along?
 
-```{r, eval=remake}
-tibble::tibble(
-  points_per_polygon = 1000,
-  fixed_radius = 17,
-  cycling_radius = 3:8,
-  colors = c(
-    "dodgerblue4", "white",
-    "dodgerblue3", "white",
-    "dodgerblue2", "white")) %>% 
-  pmap_chr(spiro) %>%
-  image_merge(
-    output = "i_saw_your_movie.svg")
-```
-
-```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F}
-knitr::include_graphics("i_saw_your_movie.svg")
-```
-
-# Emu-Woman-Sunset
-
-```{r, eval=remake}
-n <- 25
-cc <- ochre_palettes$emu_woman_paired[c(6, 11, 2, 7, 9)] %>% 
-  rep(5)
-
-tibble::tibble(
-  fixed_radius = n + 2,
-  cycling_radius = 1:n,
-  pen_radius = 1:n + 0,
-  transparency = 0.85,
-  rotation = pi / 6,
-  colors = cc,
-  file = paste0("asdf", 1:n, ".svg")) %>%
-  purrr::pmap(spiro) %>%
-  image_merge(
-    output = "emu_woman_sunset.svg") %>%
-  image_scale(scale = seq(1, 0.1, length.out = n) ^ 0.85)
-```
-
-```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F}
-knitr::include_graphics("emu_woman_sunset.svg")
-```
-<div style="text-align:right">
-Color palette selected from <a href="https://www.khanacademy.org/humanities/ap-art-history/global-contemporary/a/kngwarreye-earths-creation" class="demo_img" title="" target="_blank"> Emily Kngwarreye's <em>Emu Woman</em> (1988)<div><img src="emu_woman.jpg" alt="" /></div> </a>
-</div>
 
 # My Non-Canonical Backstory
 
@@ -491,53 +445,33 @@ spiro(
 knitr::include_graphics("nanoscale_predictions.svg")
 ```
 
-# Not Forgotten
+# <span>Some Strata</span><br><span>Still Remember the Sun</span>
 
 ```{r, eval=remake}
-c(spiro(
-  fixed_radius = 21,
-  cycling_radius = -20,
-  pen_radius = 35,
-  transparency = 0.2,
-  colors = "black",
-  file = "not_forgotten1.svg") %>% 
-  add_lines(colors = "#FFFFFFAA", line_width = .25),
-  spiro(
-  fixed_radius = 21,
-  cycling_radius = -20,
-  pen_radius = 35,
-  transparency = .75,
-  colors = "black",
-  rotation = pi / 21,
-  file = "not_forgotten2.svg") %>% 
-  add_lines(colors = "#FFFFFFAA", line_width = .5)) %>%
-  image_merge(output = "not_forgotten.svg") %>% 
-  add_background_gradient(
-    rounding = 1, 
-    radius = 1,
-    colors = c("lightcyan2",
-      rep(c("royalblue4", "lightcyan2"), 13),"royalblue4",
-      rep("white",2)),
-      stops = c(0,
-        0.05, 0.07, 
-        0.11, 0.1578947, 
-        0.2105263, 0.28, 
-        0.3395, 0.39, 
-        0.441, 0.485, 
-        0.53, 0.571, 
-        0.609, 0.6415, 
-        0.682, 0.711, 
-        0.745, 0.77, 
-        0.80, 0.823, 
-        0.84, 0.86, 
-        0.88, 0.895, 
-        0.905, 0.91, 
-        0.92, 0.93, 1))
+n <- 25
+cc <- ochre_palettes$emu_woman_paired[c(6, 11, 2, 7, 9)] %>% 
+  rep(5)
+
+tibble::tibble(
+  fixed_radius = n + 2,
+  cycling_radius = 1:n,
+  pen_radius = 1:n + 0,
+  transparency = 0.85,
+  rotation = pi / 6,
+  colors = cc,
+  file = paste0("asdf", 1:n, ".svg")) %>%
+  purrr::pmap(spiro) %>%
+  image_merge(
+    output = "emu_woman_sunset.svg") %>%
+  image_scale(scale = seq(1, 0.1, length.out = n) ^ 0.85)
 ```
 
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F}
-knitr::include_graphics("not_forgotten.svg")
+knitr::include_graphics("emu_woman_sunset.svg")
 ```
+<div style="text-align:right">
+Color palette selected from <a href="https://www.khanacademy.org/humanities/ap-art-history/global-contemporary/a/kngwarreye-earths-creation" class="demo_img" title="" target="_blank"> Emily Kngwarreye's <em>Emu Woman</em> (1988)<div><img src="emu_woman.jpg" alt="" /></div> </a>
+</div>
 
 # <span>When Time Reverses</span>,<br><span>You'll Know What's Coming<span>
 
@@ -725,6 +659,54 @@ spiro(
 knitr::include_graphics("maelstrom_sunset.svg")
 ```
 
+# Can We Open It, Grandma?
+
+```{r, eval=remake}
+c(spiro(
+  fixed_radius = 21,
+  cycling_radius = -20,
+  pen_radius = 35,
+  transparency = 0.2,
+  colors = "black",
+  file = "not_forgotten1.svg") %>% 
+  add_lines(colors = "#FFFFFFAA", line_width = .25),
+  spiro(
+  fixed_radius = 21,
+  cycling_radius = -20,
+  pen_radius = 35,
+  transparency = .75,
+  colors = "black",
+  rotation = pi / 21,
+  file = "not_forgotten2.svg") %>% 
+  add_lines(colors = "#FFFFFFAA", line_width = .5)) %>%
+  image_merge(output = "not_forgotten.svg") %>% 
+  add_background_gradient(
+    rounding = 1, 
+    radius = 1,
+    colors = c("lightcyan2",
+      rep(c("royalblue4", "lightcyan2"), 13),"royalblue4",
+      rep("white",2)),
+      stops = c(0,
+        0.05, 0.07, 
+        0.11, 0.1578947, 
+        0.2105263, 0.28, 
+        0.3395, 0.39, 
+        0.441, 0.485, 
+        0.53, 0.571, 
+        0.609, 0.6415, 
+        0.682, 0.711, 
+        0.745, 0.77, 
+        0.80, 0.823, 
+        0.84, 0.86, 
+        0.88, 0.895, 
+        0.905, 0.91, 
+        0.92, 0.93, 1))
+```
+
+```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F}
+knitr::include_graphics("not_forgotten.svg")
+```
+
 # D'Ya Wanna Roller Skate?
 
 ```{r, eval=remake}
@@ -746,7 +728,6 @@ tibble(
 ```{r, echo = F, fig.width=8, fig.height=8, out.width='100%', out.height='100%', echo = F}
 knitr::include_graphics("wanna_rollerskate.svg")
 ```
-
 
 # Checkered Future
 
@@ -878,36 +859,24 @@ spiro(
 knitr::include_graphics("hawaiian_snow_salad.svg")
 ```
 
-# <span>The Foreglow of</span><br><span>a Simple Insight</span>
+# Was It This Obvious All Along?
 
 ```{r, eval=remake}
-l <- 27
-  crossing(
-    fixed_radius = 17,
-    cycling_radius = 1:9,
-    pen_radius = 11
-  ) %>%
-    mutate(colors = LaCroixColoR::lacroix_palette("Coconut", n =  9) %>% scales::alpha(0.9)) %>%
-    pmap(
-      spiro,
-      draw_fills = T,
-      xlim = c(-l, l),
-      ylim = c(-l, l),
-      color_cycles = 17 * 6,
-      points_per_polygon = 500
-    ) %>%
-    image_merge(output = "foreglow.svg") %>%
-    add_background_gradient(
-      colors = rep(
-        LaCroixColoR::lacroix_palette("Coconut", 9) %>% colorspace::darken(.1),
-        3
-      ),
-      stops = c(0.7 * seq(0, 1, length.out = l - 3), 0.78 , 0.88, 0.98)
-    )
+tibble::tibble(
+  points_per_polygon = 1000,
+  fixed_radius = 17,
+  cycling_radius = 3:8,
+  colors = c(
+    "dodgerblue4", "white",
+    "dodgerblue3", "white",
+    "dodgerblue2", "white")) %>% 
+  pmap_chr(spiro) %>%
+  image_merge(
+    output = "i_saw_your_movie.svg")
 ```
 
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F}
-knitr::include_graphics("foreglow.svg")
+knitr::include_graphics("i_saw_your_movie.svg")
 ```
 
 # Yes You May
@@ -949,6 +918,39 @@ p[-1:-3] %>%
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F}
 knitr::include_graphics("yes_you_may.svg")
 ```
+
+# <span>The Foreglow of</span><br><span>a Simple Insight</span>
+
+```{r, eval=remake}
+l <- 27
+  crossing(
+    fixed_radius = 17,
+    cycling_radius = 1:9,
+    pen_radius = 11
+  ) %>%
+    mutate(colors = LaCroixColoR::lacroix_palette("Coconut", n =  9) %>% scales::alpha(0.9)) %>%
+    pmap(
+      spiro,
+      draw_fills = T,
+      xlim = c(-l, l),
+      ylim = c(-l, l),
+      color_cycles = 17 * 6,
+      points_per_polygon = 500
+    ) %>%
+    image_merge(output = "foreglow.svg") %>%
+    add_background_gradient(
+      colors = rep(
+        LaCroixColoR::lacroix_palette("Coconut", 9) %>% colorspace::darken(.1),
+        3
+      ),
+      stops = c(0.7 * seq(0, 1, length.out = l - 3), 0.78 , 0.88, 0.98)
+    )
+```
+
+```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%', echo = F}
+knitr::include_graphics("foreglow.svg")
+```
+
 
 # Bending Is Not a Compromise
 
