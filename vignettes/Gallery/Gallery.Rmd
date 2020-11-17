@@ -1,5 +1,5 @@
 ---
-title: "Schn&#299;rographs"
+title: "Schnīrographs"
 subtitle: "Three Numbers and One Equation"
 author: "by W. Joel Schneider"
 pkgdown:
