@@ -1,5 +1,5 @@
 Package: spiro
-Title: Spirographs
+Title: Make Animated Spirographs
 Version: 0.2.0
 Authors@R: 
     person(given = "W. Joel",
