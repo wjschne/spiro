@@ -97,7 +97,7 @@
       <h1 data-toc-skip>Making Spirographs with spiro</h1>
                         <h4 class="author">W. Joel Schneider</h4>
             
-            <h4 class="date">2020-11-17</h4>
+            <h4 class="date">2020-11-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/wjschne/spiro/blob/master/vignettes/HowToUse/spiro.Rmd"><code>vignettes/HowToUse/spiro.Rmd</code></a></small>
       <div class="hidden name"><code>spiro.Rmd</code></div>
@@ -131,7 +131,7 @@
 <p>Enter the spiro package. It can do traditional spirographs like this one:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/wjschne/spiro">spiro</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">magrittr</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 
 <span class="fu"><a href="../../reference/spiro.html">spiro</a></span><span class="op">(</span>
   fixed_radius <span class="op">=</span> <span class="fl">7</span>,
@@ -750,9 +750,7 @@
   color_cycles <span class="op">=</span> <span class="fl">6</span>,
   points_per_polygon <span class="op">=</span> <span class="fl">1000</span>,
   savefile <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-<span class="co">#&gt; &lt;colors&gt;</span>
-<span class="co">#&gt; #772C4BFF #9D4858FF #C3665EFF #E18A64FF #F0B587FF #F8DFC1FF</span></code></pre></div>
+<span class="op">)</span></code></pre></div>
 <p><img src="spiro_files/figure-html/spiro_data-1.svg" width="100%" height="100%"></p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">d</span> <span class="op">%&gt;%</span>

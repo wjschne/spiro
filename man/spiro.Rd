@@ -43,7 +43,7 @@ spiro(
 
 \item{color_groups}{Number of groups in group_id variable}
 
-\item{colors}{Vector of colors for groups. Defaults to a random hsv color when color_groups is 1 and to a random palette from the paletteer package when color_groups > 1.}
+\item{colors}{Vector of colors for groups. Defaults to a random hsv color when color_groups is 1 and to the viridis palette from the viridis package when color_groups > 1.}
 
 \item{transparency}{Transparency of colors. Ranges from 0 to 1. Default is NA (i.e., leave the colors as specified in the colors argument).}
 

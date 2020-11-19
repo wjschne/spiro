@@ -42,7 +42,7 @@ spiro(
   file = "example.svg") 
 ```
 
-![](man/figures/example.svg)<!-- -->
+![](man/figures/example.svg)
 
 Please note that the spiro project is released with a [Contributor Code
 of

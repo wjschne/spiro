@@ -25,5 +25,4 @@ All these words are correctly spelled.
 
 ## Responding to concerns raised in previous submission attempt
 
-* Revised title to explain what the package does.
-* Used `on.exit` to restore `par` settings after exiting functions that alter `par`.
+* Removed dependency on the paletteer package to decrease installation time.

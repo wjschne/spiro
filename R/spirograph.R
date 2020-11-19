@@ -8,7 +8,7 @@
 #' @param pen_radius The pen placement inside the moving circle cycling around the fixed circle. Can be positive or negative.
 #' @param windings The number of times the the moving circle winds around the fixed circle.
 #' @param color_groups Number of groups in group_id variable
-#' @param colors Vector of colors for groups. Defaults to a random hsv color when color_groups is 1 and to a random palette from the paletteer package when color_groups > 1.
+#' @param colors Vector of colors for groups. Defaults to a random hsv color when color_groups is 1 and to the viridis palette from the viridis package when color_groups > 1.
 #' @param transparency Transparency of colors. Ranges from 0 to 1. Default is NA (i.e., leave the colors as specified in the colors argument).
 #' @param color_cycles The number of times the color vector  is recycled
 #' @param color_sort Arranges all paths of the same color to be written in groups
@@ -101,12 +101,7 @@ spiro <- function(
     if (color_groups == 1) {
       colors <- grDevices::hsv(stats::runif(1))
     } else {
-      p <- paletteer::palettes_c_names %>%
-        dplyr::sample_n(1)
-      colors <- paletteer::paletteer_c(
-        palette = paste0(dplyr::pull(p, .data$package),"::",dplyr::pull(p, .data$palette)),
-        n = color_groups)
-      print(colors)
+      colors <- viridis::viridis(n = color_groups)
     }
   }
 
