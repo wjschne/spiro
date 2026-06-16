@@ -4,3 +4,6 @@ doc
 .Rhistory
 .RData
 inst/doc
+docs
+logo.svg
+vignettes/Gallery/Gallery.Rproj

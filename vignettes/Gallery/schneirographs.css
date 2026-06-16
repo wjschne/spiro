@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,700;1,400&family=Eagle+Lake&display=swap');
+
+body {
+  background-color: white;
+  font-family: Cormorant, Palatino, 'Palatino Linotype', serif;
+  font-size: 18pt;
+}
+
+h1, h2, h3, .h1, .h2, .h3 .author{
+  font-family:'Eagle Lake', Palatino, 'Palatino Linotype', serif;
+  background: -webkit-linear-gradient(#666666, #222222);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: normal;
+}
+
+
+
+.light {
+  background-color: #f0f2f5;
+  color: #282829;
+    height: 100%;
+    width: 100%;
+}
+
+.dark {
+  background-color: #282829;
+  color: #f0f2f5;
+  height: 100%;
+    width: 100%;
+}
+
+.vmiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.no-footer .slide-footer,
+.no-footer footer {
+  display: none !important;
+}
+
+.reveal .controls {
+  display: none !important;
+}
+

@@ -1,3 +1,7 @@
+# spiro 0.3.0
+
+* made compatible with R 4.0 and greater
+
 # spiro 0.2.0
 
 * added `add_circle` function to add circles to images

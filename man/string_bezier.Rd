@@ -35,16 +35,3 @@ file by default or tibble with data if savefile if FALSE
 \description{
 Make string bezier
 }
-\examples{
-\dontshow{.old_wd <- setwd(tempdir())}
-library(spiro)
-string_bezier(
-   file = "string_bezier.svg",
-   x = c(0,0,1),
-   y = c(1,0,0),
-   color = c("red","blue","black"),
-   n = 100,
-   lwd = 0.3
-   )
-\dontshow{setwd(.old_wd)}
-}

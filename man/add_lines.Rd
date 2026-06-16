@@ -10,7 +10,8 @@ add_lines(
   transparency = NA,
   line_width = 0.5,
   openfile = TRUE,
-  output = input
+  output = input,
+  css = ""
 )
 }
 \arguments{
@@ -24,7 +25,9 @@ add_lines(
 
 \item{openfile}{Open file in default program for .svg format. Defaults to FALSE.}
 
-\item{output}{File name of .svg file to output. Default is to overwrite the input file.
+\item{output}{File name of .svg file to output. Default is to overwrite the input file.}
+
+\item{css}{Additional styling via css
 #' @return output name}
 }
 \description{

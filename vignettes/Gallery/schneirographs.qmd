@@ -1,0 +1,25 @@
+---
+title: "Schneirographs"
+subtitle: "Three Numbers and One Equation"
+author: W. Joel Schneider
+title-slide-attributes:
+    data-background-image: tintedrainbow.svg
+    data-background-size: contain
+    data-background-position: right
+    data-background-opacity: "1"
+format: 
+  revealjs:
+    self-contained: false
+    css: "schneirographs.css"
+    mainfont: Cormorant
+    theme: schneirographs.scss
+    header: false
+    center-title-slide: false
+---
+
+## Some Strata Still Remember the Sun {.no-footer data-background-image="emu_woman_sunset.svg" data-background-size="contain" data-background-position="right"}
+
+
+
+
+

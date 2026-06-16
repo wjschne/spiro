@@ -31,7 +31,7 @@ add_circle(
 
 \item{line_width}{width of line}
 
-\item{openfile}{Open file in default program for .svg format. Defaults to FALSE.}
+\item{openfile}{Open file in default program for .svg format. Defaults to TRUE}
 
 \item{output}{File name of .svg file to output. Default is to overwrite the input file.}
 }

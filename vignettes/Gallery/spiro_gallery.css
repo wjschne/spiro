@@ -1,7 +1,12 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,700;1,400&family=Eagle+Lake&display=swap');
+
 .caption {text-align:right;}
 
-body, h4{font-family: 'Cormorant', Palatino, 'Palatino Linotype', serif; font-size: 18pt;}
+body, h4 {
+  font-family: Cormorant, Palatino, 'Palatino Linotype', serif; font-size: 18pt;
+
+}
 
 
 .btn-group {visibility:hidden}

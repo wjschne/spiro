@@ -1,8 +1,12 @@
-pandoc: 2.9.2.1
-pkgdown: 1.6.1
-pkgdown_sha: ~
+pandoc: '3.2'
+pkgdown: 2.1.1.9000
+pkgdown_sha: 18cca452d736fea33d47b19b4ef4973db9104a75
 articles:
-  Gallery/Gallery: Gallery.html
-  HowToUse/spiro: spiro.html
-last_built: 2020-11-18T22:40Z
-
+  Gallery/Gallery: Gallery/Gallery.html
+  Gallery/GallerySlides: Gallery/GallerySlides.html
+  Gallery/schneirographs: Gallery/schneirographs.html
+  HowToUse/spiro: HowToUse/spiro.html
+last_built: 2025-04-02T11:49Z
+urls:
+  reference: https://wjschne.github.io/spiro/reference
+  article: https://wjschne.github.io/spiro/articles

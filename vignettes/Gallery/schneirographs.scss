@@ -1,0 +1,22 @@
+/*-- scss:defaults --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,700;1,400&family=Eagle+Lake&display=swap');
+
+// fonts
+$font-family-serif: Cormorant;
+$font-family-sans-serif: Cormorant, Palatino, 'Palatino Linotype', serif  !default;
+$font-family-monospace: 'Consolas', monospace  !default;
+
+// colors
+$body-bg: #282829 !default;
+$body-color: #eee !default;
+$link-color: #a23 !default;
+$selection-bg: $link-color !default;
+$selection-color: #fff !default;
+$input-panel-bg: rgba(233, 236, 239, 0.2) !default;
+
+//headings
+$presentation-heading-font: 'Eagle Lake', sans-serif !default;
+$presentation-heading-font-weight: 700 !default;
+$presentation-heading-text-shadow: 2px 2px 2px $body-bg !default;
+

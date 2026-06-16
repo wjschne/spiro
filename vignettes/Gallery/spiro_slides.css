@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,700;1,400&family=Eagle+Lake&display=swap');
+
+body {
+  background-color: white;
+  font-family: Cormorant, Palatino, 'Palatino Linotype', serif;
+  font-size: 18pt;
+}
+
+h1, h2, h3, .h1, .h2, .h3 .author{
+  font-family:'Eagle Lake', Palatino, 'Palatino Linotype', serif;
+  background: -webkit-linear-gradient(#666666, #222222);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: normal;
+}
+
+.row {
+  overflow: hidden;
+    padding: 0;
+  margin: 0;
+}
+
+.remark-slide-number {
+  display: none;
+}
+
+.split-square2>.column:first-of-type {
+  width: 43.75%;
+  height:100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.split-square2>.column:nth-of-type(2) {
+  width: 56.25%;
+  height:100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.split-square1>.column:first-of-type {
+  width: 56.25%;
+  height:100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.split-square1>.column:nth-of-type(2) {
+  width: 43.75%;
+  height:100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.light {
+  background-color: #f0f2f5;
+  color: #282829;
+}
+
+.dark {
+  background-color: #282829;
+  color: #f0f2f5;
+}
+
+.dark h1, .dark h2, .dark h3 {
+  color: transparent;
+  font-family:'Eagle Lake', Palatino, 'Palatino Linotype', serif;
+  background: -webkit-linear-gradient(#f0f2f5, #778);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: normal;
+}
+
+.light h1, .light h2, .light h3 {
+  color: transparent;
+  font-family:'Eagle Lake', Palatino, 'Palatino Linotype', serif;
+  background: -webkit-linear-gradient(#5a5a5c, #282829);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: normal;
+}
+.vmiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.smaller {
+  font-size: 0.95rem;
+}
+
+#schneirographs{
+  font-variant: small-caps;
+  letter-spacing: 2.9px;
+  font-size: 40pt;
+  line-height: 1em;
+  margin-bottom: 0px;
+  padding-right: 6px;
+}
+
+#three-numbers-one-equation{
+
+  letter-spacing: 1.1px;
+  font-size: 17.75pt;
+  margin-top: -6px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+#by-w-joel-schneider{
+  font-family: Cormorant, Palatino, 'Palatino Linotype', serif;
+  margin-top: -2px;
+  font-size: 18pt;
+  letter-spacing: 0.39px;
+}
+
+.w-1 {
+max-width: 43.75%;
+}
+
+.w-2 {
+width: 56.25%;
+}
